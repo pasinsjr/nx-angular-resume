@@ -1,0 +1,142 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "",
+  "projects": {
+    "nx-angular-resume": {
+      "root": "apps/nx-angular-resume/",
+      "sourceRoot": "apps/nx-angular-resume/src",
+      "projectType": "application",
+      "prefix": "nx-angular-resume",
+      "schematics": {
+        "@nrwl/schematics:component": {
+          "style": "scss"
+        }
+      },
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/apps/nx-angular-resume",
+            "index": "apps/nx-angular-resume/src/index.html",
+            "main": "apps/nx-angular-resume/src/main.ts",
+            "polyfills": "apps/nx-angular-resume/src/polyfills.ts",
+            "tsConfig": "apps/nx-angular-resume/tsconfig.app.json",
+            "assets": [
+              "apps/nx-angular-resume/src/favicon.ico",
+              "apps/nx-angular-resume/src/assets"
+            ],
+            "styles": ["apps/nx-angular-resume/src/styles.scss"],
+            "scripts": [],
+            "es5BrowserSupport": true
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/nx-angular-resume/src/environments/environment.ts",
+                  "with": "apps/nx-angular-resume/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "nx-angular-resume:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "nx-angular-resume:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "nx-angular-resume:build"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "apps/nx-angular-resume/tsconfig.app.json",
+              "apps/nx-angular-resume/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/builders:jest",
+          "options": {
+            "jestConfig": "apps/nx-angular-resume/jest.config.js",
+            "tsConfig": "apps/nx-angular-resume/tsconfig.spec.json",
+            "setupFile": "apps/nx-angular-resume/src/test-setup.ts"
+          }
+        }
+      }
+    },
+    "nx-angular-resume-e2e": {
+      "root": "apps/nx-angular-resume-e2e",
+      "projectType": "application",
+      "prefix": "",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/builders:cypress",
+          "options": {
+            "cypressConfig": "apps/nx-angular-resume-e2e/cypress.json",
+            "tsConfig": "apps/nx-angular-resume-e2e/tsconfig.e2e.json",
+            "devServerTarget": "nx-angular-resume:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "nx-angular-resume:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": "apps/nx-angular-resume-e2e/tsconfig.e2e.json",
+            "exclude": ["**/node_modules/**"]
+          }
+        }
+      }
+    }
+  },
+  "cli": {
+    "warnings": {
+      "typescriptMismatch": false,
+      "versionMismatch": false
+    },
+    "defaultCollection": "@nrwl/schematics"
+  },
+  "schematics": {
+    "@nrwl/schematics:application": {
+      "style": "scss",
+      "framework": "angular"
+    },
+    "@nrwl/schematics:library": {
+      "style": "scss"
+    }
+  },
+  "defaultProject": "nx-angular-resume"
+}
