@@ -120,6 +120,68 @@
           }
         }
       }
+    },
+    "resume-profile": {
+      "root": "libs/resume/profile",
+      "sourceRoot": "libs/resume/profile/src",
+      "projectType": "library",
+      "prefix": "nx-angular-resume",
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/resume/profile/tsconfig.lib.json",
+              "libs/resume/profile/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/builders:jest",
+          "options": {
+            "jestConfig": "libs/resume/profile/jest.config.js",
+            "tsConfig": "libs/resume/profile/tsconfig.spec.json",
+            "setupFile": "libs/resume/profile/src/test-setup.ts"
+          }
+        }
+      },
+      "schematics": {
+        "@nrwl/schematics:component": {
+          "styleext": "scss"
+        }
+      }
+    },
+    "resume-dashboard": {
+      "root": "libs/resume/dashboard",
+      "sourceRoot": "libs/resume/dashboard/src",
+      "projectType": "library",
+      "prefix": "nx-angular-resume",
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/resume/dashboard/tsconfig.lib.json",
+              "libs/resume/dashboard/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/builders:jest",
+          "options": {
+            "jestConfig": "libs/resume/dashboard/jest.config.js",
+            "tsConfig": "libs/resume/dashboard/tsconfig.spec.json",
+            "setupFile": "libs/resume/dashboard/src/test-setup.ts"
+          }
+        }
+      },
+      "schematics": {
+        "@nrwl/schematics:component": {
+          "styleext": "scss"
+        }
+      }
     }
   },
   "cli": {
