@@ -1,14 +1,14 @@
 import { async, TestBed } from '@angular/core/testing';
-import { ResumeProfileModule } from './resume-profile.module';
+import { ResumeUiModule } from './resume-ui.module';
 
-describe('ResumeProfileModule', () => {
+describe('ResumeUiModule', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [ResumeProfileModule]
+      imports: [ResumeUiModule]
     }).compileComponents();
   }));
 
   it('should create', () => {
-    expect(ResumeProfileModule).toBeDefined();
+    expect(ResumeUiModule).toBeDefined();
   });
 });

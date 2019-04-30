@@ -29,7 +29,10 @@
               "apps/nx-angular-resume/src/favicon.ico",
               "apps/nx-angular-resume/src/assets"
             ],
-            "styles": ["apps/nx-angular-resume/src/normalize.css", "apps/nx-angular-resume/src/styles.scss"],
+            "styles": [
+              "apps/nx-angular-resume/src/normalize.css",
+              "apps/nx-angular-resume/src/styles.scss"
+            ],
             "scripts": [],
             "es5BrowserSupport": true
           },
@@ -120,37 +123,6 @@
         }
       }
     },
-    "resume-profile": {
-      "root": "libs/resume/profile",
-      "sourceRoot": "libs/resume/profile/src",
-      "projectType": "library",
-      "prefix": "nx-angular-resume",
-      "architect": {
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "libs/resume/profile/tsconfig.lib.json",
-              "libs/resume/profile/tsconfig.spec.json"
-            ],
-            "exclude": ["**/node_modules/**"]
-          }
-        },
-        "test": {
-          "builder": "@nrwl/builders:jest",
-          "options": {
-            "jestConfig": "libs/resume/profile/jest.config.js",
-            "tsConfig": "libs/resume/profile/tsconfig.spec.json",
-            "setupFile": "libs/resume/profile/src/test-setup.ts"
-          }
-        }
-      },
-      "schematics": {
-        "@nrwl/schematics:component": {
-          "styleext": "scss"
-        }
-      }
-    },
     "resume-dashboard": {
       "root": "libs/resume/dashboard",
       "sourceRoot": "libs/resume/dashboard/src",
@@ -173,6 +145,37 @@
             "jestConfig": "libs/resume/dashboard/jest.config.js",
             "tsConfig": "libs/resume/dashboard/tsconfig.spec.json",
             "setupFile": "libs/resume/dashboard/src/test-setup.ts"
+          }
+        }
+      },
+      "schematics": {
+        "@nrwl/schematics:component": {
+          "styleext": "scss"
+        }
+      }
+    },
+    "resume-ui": {
+      "root": "libs/resume-ui",
+      "sourceRoot": "libs/resume-ui/src",
+      "projectType": "library",
+      "prefix": "nx-angular-resume",
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/resume-ui/tsconfig.lib.json",
+              "libs/resume-ui/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/builders:jest",
+          "options": {
+            "jestConfig": "libs/resume-ui/jest.config.js",
+            "tsConfig": "libs/resume-ui/tsconfig.spec.json",
+            "setupFile": "libs/resume-ui/src/test-setup.ts"
           }
         }
       },

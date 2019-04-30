@@ -15,10 +15,10 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@nx-angular-resume/resume/profile": ["libs/resume/profile/src/index.ts"],
       "@nx-angular-resume/resume/dashboard": [
         "libs/resume/dashboard/src/index.ts"
-      ]
+      ],
+      "@nx-angular-resume/resume-ui": ["libs/resume-ui/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
