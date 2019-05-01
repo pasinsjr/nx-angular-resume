@@ -19,6 +19,12 @@
     },
     "resume-ui": {
       "tags": []
+    },
+    "shared-ui": {
+      "tags": []
+    },
+    "common-classes": {
+      "tags": []
     }
   }
 }

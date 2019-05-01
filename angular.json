@@ -38,10 +38,12 @@
           },
           "configurations": {
             "production": {
-              "fileReplacements": [{
-                "replace": "apps/nx-angular-resume/src/environments/environment.ts",
-                "with": "apps/nx-angular-resume/src/environments/environment.prod.ts"
-              }],
+              "fileReplacements": [
+                {
+                  "replace": "apps/nx-angular-resume/src/environments/environment.ts",
+                  "with": "apps/nx-angular-resume/src/environments/environment.prod.ts"
+                }
+              ],
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
@@ -51,11 +53,13 @@
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
-              "budgets": [{
-                "type": "initial",
-                "maximumWarning": "2mb",
-                "maximumError": "5mb"
-              }]
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ]
             }
           }
         },
@@ -176,6 +180,67 @@
             "jestConfig": "libs/resume-ui/jest.config.js",
             "tsConfig": "libs/resume-ui/tsconfig.spec.json",
             "setupFile": "libs/resume-ui/src/test-setup.ts"
+          }
+        }
+      },
+      "schematics": {
+        "@nrwl/schematics:component": {
+          "styleext": "scss"
+        }
+      }
+    },
+    "shared-ui": {
+      "root": "libs/shared-ui",
+      "sourceRoot": "libs/shared-ui/src",
+      "projectType": "library",
+      "prefix": "nx-angular-resume",
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/shared-ui/tsconfig.lib.json",
+              "libs/shared-ui/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/builders:jest",
+          "options": {
+            "jestConfig": "libs/shared-ui/jest.config.js",
+            "tsConfig": "libs/shared-ui/tsconfig.spec.json",
+            "setupFile": "libs/shared-ui/src/test-setup.ts"
+          }
+        }
+      },
+      "schematics": {
+        "@nrwl/schematics:component": {
+          "styleext": "scss"
+        }
+      }
+    },
+    "common-classes": {
+      "root": "libs/common-classes",
+      "sourceRoot": "libs/common-classes/src",
+      "projectType": "library",
+      "prefix": "nx-angular-resume",
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/common-classes/tsconfig.lib.json",
+              "libs/common-classes/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/builders:jest",
+          "options": {
+            "jestConfig": "libs/common-classes/jest.config.js",
+            "tsConfig": "libs/common-classes/tsconfig.spec.json"
           }
         }
       },

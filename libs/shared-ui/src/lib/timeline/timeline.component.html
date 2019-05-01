@@ -1,0 +1,19 @@
+<div class="timeline-section">
+  <div class="timeline-container">
+    <h1>{{title}}</h1>
+    <div class="role-groups">
+      <div class="role-section" *ngFor="let timeline of timeLineElements">
+        <div class="theme-element">
+          <div class="node-element"></div>
+          <div class="line-element"></div>
+        </div>
+        <div class="time-element"> {{timeline.timeRange}} </div>
+        <div class="role-description">
+          <h2>{{timeline.header.value}}</h2>
+          <h3>{{timeline.secondDescription}}</h3>
+          <h4 *ngFor="let line of timeline.detailLines">{{line}}</h4>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

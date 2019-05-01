@@ -18,7 +18,9 @@
       "@nx-angular-resume/resume/dashboard": [
         "libs/resume/dashboard/src/index.ts"
       ],
-      "@nx-angular-resume/resume-ui": ["libs/resume-ui/src/index.ts"]
+      "@nx-angular-resume/resume-ui": ["libs/resume-ui/src/index.ts"],
+      "@nx-angular-resume/shared-ui": ["libs/shared-ui/src/index.ts"],
+      "@nx-angular-resume/common-classes": ["libs/common-classes/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
