@@ -6,6 +6,7 @@
 
 .card-area {
   position: absolute;
+  top: 100px;
 }
 
 .card-element {
@@ -17,6 +18,15 @@
   border-radius: $global-box-border-radius;
   background: white;
   position: absolute;
+  padding: 2rem;
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  p {
+    height: 80px;
+  }
 
   .card-image {
     border-radius: 50%;

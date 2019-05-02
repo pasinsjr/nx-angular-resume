@@ -73,12 +73,14 @@ export class DashboardComponent implements OnInit {
     {
       title: String20.create('NX'),
       imgSrc: StringPath.create(''),
-      description: ''
+      description:
+        'Following Nrwl.io book which provide enterprise Angular styles guide (mono-repo).'
     },
     {
       title: String20.create('NgRX (Redux)'),
       imgSrc: StringPath.create(''),
-      description: ''
+      description:
+        'RxJS state management tool that was inpired by Redux (Using with Redux dev tool for debugging with current state management)'
     },
     {
       title: String20.create('Angular'),
@@ -93,7 +95,8 @@ export class DashboardComponent implements OnInit {
     {
       title: String20.create('SCSS'),
       imgSrc: StringPath.create(''),
-      description: ''
+      description:
+        'SCSS providing a variable compiler that is a one of great theme customization tools'
     },
     {
       title: String20.create('Mongo'),
