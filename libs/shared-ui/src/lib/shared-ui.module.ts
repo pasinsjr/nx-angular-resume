@@ -4,6 +4,7 @@ import { TimelineComponent } from './timeline/timeline.component';
 
 @NgModule({
   imports: [CommonModule],
-  declarations: [TimelineComponent]
+  declarations: [TimelineComponent],
+  exports: [TimelineComponent]
 })
 export class SharedUiModule {}
