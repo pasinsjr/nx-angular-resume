@@ -1,0 +1,33 @@
+@import '_variables';
+
+.card-container {
+  padding: 50px;
+}
+
+.card-area {
+  position: absolute;
+}
+
+.card-element {
+
+  width: 350px;
+  height: 200px;
+  box-shadow: $global-box-shadow;
+  border: $global-box-border;
+  border-radius: $global-box-border-radius;
+  background: white;
+  position: absolute;
+
+  .card-image {
+    border-radius: 50%;
+    overflow: hidden;
+    float: left;
+    height: 40px;
+    width: 40px;
+  }
+
+  h2 {
+    margin-left: 40px;
+    text-align: center;
+  }
+}

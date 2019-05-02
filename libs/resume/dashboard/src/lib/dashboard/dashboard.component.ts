@@ -1,11 +1,22 @@
 import { Component, OnInit } from '@angular/core';
-import { String40 } from '@nx-angular-resume/common-classes';
+import {
+  String40,
+  String20,
+  StringPath,
+  StringURL
+} from '@nx-angular-resume/common-classes';
 
 interface TimelineElement {
   header: String40;
   timeRange: String40;
   secondDescription: string;
   detailLines: string[];
+}
+
+interface CardElement {
+  title: String20;
+  imgSrc: StringPath | StringURL;
+  description: string;
 }
 
 @Component({
@@ -55,6 +66,49 @@ export class DashboardComponent implements OnInit {
         'Building social data pull & analysis system for notify almost real time talk data those are used in Redprice project. (JAVA, RabbitMQ, Facebook API, Twitter API)',
         'Environment: Node.js, SailsJS, SpringMVC, RabbitMQ, MongoDB'
       ]
+    }
+  ];
+
+  mockTechStack: CardElement[] = [
+    {
+      title: String20.create('NX'),
+      imgSrc: StringPath.create(''),
+      description: ''
+    },
+    {
+      title: String20.create('NgRX (Redux)'),
+      imgSrc: StringPath.create(''),
+      description: ''
+    },
+    {
+      title: String20.create('Angular'),
+      imgSrc: StringPath.create(''),
+      description: ''
+    },
+    {
+      title: String20.create('TypeScript'),
+      imgSrc: StringPath.create(''),
+      description: ''
+    },
+    {
+      title: String20.create('SCSS'),
+      imgSrc: StringPath.create(''),
+      description: ''
+    },
+    {
+      title: String20.create('Mongo'),
+      imgSrc: StringPath.create(''),
+      description: ''
+    },
+    {
+      title: String20.create('DDD'),
+      imgSrc: StringPath.create(''),
+      description: ''
+    },
+    {
+      title: String20.create('OOP'),
+      imgSrc: StringPath.create(''),
+      description: ''
     }
   ];
 
