@@ -15,7 +15,6 @@ interface TimelineElement {
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TimelineComponent {
-  @Input() title: string;
   @Input() timeLineElements: TimelineElement[];
 
   constructor() {}
