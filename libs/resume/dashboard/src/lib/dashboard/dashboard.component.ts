@@ -96,7 +96,12 @@ export class DashboardComponent implements OnInit {
       title: String20.create('SCSS'),
       imgSrc: StringPath.create(''),
       description:
-        'SCSS providing a variable compiler that is a one of great theme customization tools'
+        'SCSS providing a variable compiler that is the one of great theme customization tools'
+    },
+    {
+      title: String20.create('Node.js'),
+      imgSrc: StringPath.create(''),
+      description: ''
     },
     {
       title: String20.create('Mongo'),
