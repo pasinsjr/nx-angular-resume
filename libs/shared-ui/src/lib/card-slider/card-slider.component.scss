@@ -21,6 +21,10 @@
   position: absolute;
   padding: 2rem;
 
+  &.transition-move {
+    transition: transform 0.5s;
+  }
+
   &:hover {
     cursor: pointer;
   }
