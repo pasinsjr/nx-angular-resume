@@ -85,12 +85,13 @@ export class DashboardComponent implements OnInit {
     {
       title: String20.create('Angular'),
       imgSrc: StringPath.create(''),
-      description: ''
+      description: 'I have been using for 2.5+ years, '
     },
     {
       title: String20.create('TypeScript'),
       imgSrc: StringPath.create(''),
-      description: ''
+      description:
+        'Reference to "Modeling To Functional" book styles (I rarely wrote it in pure OOP)'
     },
     {
       title: String20.create('SCSS'),
