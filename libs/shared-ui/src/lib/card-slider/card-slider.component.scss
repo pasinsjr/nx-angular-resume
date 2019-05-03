@@ -25,6 +25,10 @@
     transition: transform 0.5s;
   }
 
+  &.to-front {
+    z-index: 300 !important;
+  }
+
   &:hover {
     cursor: pointer;
   }

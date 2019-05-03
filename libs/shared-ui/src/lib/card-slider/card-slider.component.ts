@@ -11,7 +11,7 @@ import {
   StringPath,
   StringURL
 } from '@nx-angular-resume/common-classes';
-import { CdkDragEnd } from '@angular/cdk/drag-drop';
+import { CdkDragEnd, CdkDragStart, CdkDragEnter } from '@angular/cdk/drag-drop';
 
 interface CardElement {
   title: String20;
@@ -32,9 +32,15 @@ export class CardSliderComponent implements OnInit {
 
   ngOnInit() {}
 
+  onDragStarted(event: CdkDragStart) {
+    const source: any = event.source;
+    this.renderrer.addClass(source.element.nativeElement, 'to-front');
+  }
+
   onDragEnded(event: CdkDragEnd) {
     const source: any = event.source;
     event.source.reset();
+    this.renderrer.removeClass(source.element.nativeElement, 'to-front');
     this.renderrer.addClass(source.element.nativeElement, 'transition-move');
     setTimeout(() => {
       this.renderrer.removeClass(
