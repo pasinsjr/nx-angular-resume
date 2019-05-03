@@ -1,12 +1,12 @@
 @import '_variables';
 
 .card-container {
-  padding: 50px;
+  position: relative;
 }
 
 .card-area {
   position: absolute;
-  top: 100px;
+  width: 100%;
 }
 
 .card-element {
