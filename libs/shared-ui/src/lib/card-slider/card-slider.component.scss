@@ -2,11 +2,12 @@
 
 .card-container {
   position: relative;
+  margin: 1rem;
 }
 
 .card-area {
   position: absolute;
-  width: 100%;
+  width: calc(100% - 350px);
 }
 
 .card-element {
@@ -25,19 +26,69 @@
   }
 
   p {
-    height: 80px;
-  }
-
-  .card-image {
-    border-radius: 50%;
+    padding-bottom: 40px;
     overflow: hidden;
-    float: left;
-    height: 40px;
-    width: 40px;
+    text-overflow: ellipsis;
+    margin: 0px;
+    text-align: center;
   }
 
-  h2 {
-    margin-left: 40px;
-    text-align: center;
+  .bottom-section {
+    position: absolute;
+    bottom: 0px;
+
+    h2 {
+      margin-left: 20px;
+    }
+
+    .card-image {
+      border-radius: 50%;
+      overflow: hidden;
+      float: left;
+      height: 40px;
+      width: 40px;
+    }
+
+    h2 {
+      margin-left: 40px;
+      text-align: center;
+    }
+  }
+}
+
+@media screen and (max-width: 425px) {
+
+  .card-area {
+    position: absolute;
+    width: calc(100% - 200px);
+  }
+
+  .card-element {
+
+    width: 200px;
+    height: 125px;
+    padding: 0.5rem;
+
+    &:hover {
+      cursor: pointer;
+    }
+
+    p {
+      padding-bottom: 40px;
+      font-size: 12px;
+    }
+
+    .bottom-section {
+      .card-image {
+        height: 20px;
+        width: 20px;
+      }
+
+      h2 {
+        font-size: 14px;
+        margin-left: 40px;
+      }
+    }
+
   }
 }
