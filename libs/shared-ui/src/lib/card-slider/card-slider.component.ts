@@ -3,15 +3,14 @@ import {
   OnInit,
   Input,
   ChangeDetectionStrategy,
-  Renderer2,
-  ElementRef
+  Renderer2
 } from '@angular/core';
 import {
   String20,
   StringPath,
   StringURL
 } from '@nx-angular-resume/common-classes';
-import { CdkDragEnd, CdkDragStart, CdkDragEnter } from '@angular/cdk/drag-drop';
+import { CdkDragEnd, CdkDragStart } from '@angular/cdk/drag-drop';
 
 interface CardElement {
   title: String20;
