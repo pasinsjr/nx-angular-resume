@@ -36,11 +36,10 @@ export class DashboardComponent implements OnInit {
       ]
     },
     {
-      header: String40.create(''),
+      header: String40.create('Exzy Co., Ltd.'),
       timeRange: String40.create('July’16 – Nov’17'),
-      secondDescription: 'Exzy Co., Ltd.',
+      secondDescription: 'Smart Meeting & Smart Office | Full Stack Developer',
       detailLines: [
-        'Smart Meeting & Smart Office | Full Stack Developer',
         'Be an initiator of Smart Meeting platform structure that was created by frontend - backend separation design',
         'Environment: Node.js, Mongo DB, AngularJS, Angular 2, SCSS, Jasmine, Chai.js'
       ]
