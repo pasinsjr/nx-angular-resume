@@ -23,11 +23,14 @@
             "polyfills": "apps/nx-angular-resume/src/polyfills.ts",
             "tsConfig": "apps/nx-angular-resume/tsconfig.app.json",
             "stylePreprocessorOptions": {
-              "includePaths": ["themes/blue"]
+              "includePaths": [
+                "themes/blue"
+              ]
             },
             "assets": [
               "apps/nx-angular-resume/src/favicon.ico",
-              "apps/nx-angular-resume/src/assets"
+              "apps/nx-angular-resume/src/assets",
+              "apps/nx-angular-resume/src/manifest.json"
             ],
             "styles": [
               "apps/nx-angular-resume/src/normalize.css",
@@ -59,7 +62,9 @@
                   "maximumWarning": "2mb",
                   "maximumError": "5mb"
                 }
-              ]
+              ],
+              "serviceWorker": true,
+              "ngswConfigPath": "apps/nx-angular-resume/ngsw-config.json"
             }
           }
         },
@@ -87,7 +92,9 @@
               "apps/nx-angular-resume/tsconfig.app.json",
               "apps/nx-angular-resume/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**"]
+            "exclude": [
+              "**/node_modules/**"
+            ]
           }
         },
         "test": {
@@ -122,7 +129,9 @@
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": "apps/nx-angular-resume-e2e/tsconfig.e2e.json",
-            "exclude": ["**/node_modules/**"]
+            "exclude": [
+              "**/node_modules/**"
+            ]
           }
         }
       }
@@ -140,7 +149,9 @@
               "libs/resume/dashboard/tsconfig.lib.json",
               "libs/resume/dashboard/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**"]
+            "exclude": [
+              "**/node_modules/**"
+            ]
           }
         },
         "test": {
@@ -171,7 +182,9 @@
               "libs/resume-ui/tsconfig.lib.json",
               "libs/resume-ui/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**"]
+            "exclude": [
+              "**/node_modules/**"
+            ]
           }
         },
         "test": {
@@ -202,7 +215,9 @@
               "libs/shared-ui/tsconfig.lib.json",
               "libs/shared-ui/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**"]
+            "exclude": [
+              "**/node_modules/**"
+            ]
           }
         },
         "test": {
@@ -233,7 +248,9 @@
               "libs/common-classes/tsconfig.lib.json",
               "libs/common-classes/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**"]
+            "exclude": [
+              "**/node_modules/**"
+            ]
           }
         },
         "test": {
@@ -263,7 +280,9 @@
               "libs/resume/profile/tsconfig.lib.json",
               "libs/resume/profile/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**"]
+            "exclude": [
+              "**/node_modules/**"
+            ]
           }
         },
         "test": {
