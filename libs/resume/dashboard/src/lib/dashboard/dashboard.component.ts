@@ -50,7 +50,7 @@ export class DashboardComponent implements OnInit {
       timeRange: String40.create('Dec’15 – Aug’16'),
       secondDescription: 'Freelancer',
       detailLines: [
-        'ntegrating 2C2P payment method to e-commerce web application (Making Wordpress plugin) that currently use in the app.',
+        'Integrating 2C2P payment method to e-commerce web application (Making Wordpress plugin) that currently use in the app.',
         'Experience with Wordpress theme customization'
       ]
     }
@@ -72,51 +72,41 @@ export class DashboardComponent implements OnInit {
   mockTechStack: CardElement[] = [
     {
       title: String20.create('NX'),
-      imgSrc: StringPath.create(''),
+      imgSrc: StringPath.create('/assets/images/nx-logo.png'),
       description:
         'Following Nrwl.io book which provide enterprise Angular styles guide (mono-repo).'
     },
     {
-      title: String20.create('NgRX (Redux)'),
-      imgSrc: StringPath.create(''),
+      title: String20.create('NgRx (Redux)'),
+      imgSrc: StringPath.create('/assets/images/ngrx-logo.svg'),
       description:
-        'RxJS state management tool that was inpired by Redux (Using with Redux dev tool for debugging with current state management)'
+        'RxJS state management tool which was inpired by Redux (Using with Redux dev tool for debugging with current state management)'
     },
     {
       title: String20.create('Angular'),
-      imgSrc: StringPath.create(''),
+      imgSrc: StringPath.create('/assets/images/angular-logo.svg'),
       description: 'I have been using for 2.5+ years, '
     },
     {
       title: String20.create('TypeScript'),
-      imgSrc: StringPath.create(''),
+      imgSrc: StringPath.create('/assets/images/ts-logo.png'),
       description:
         'Reference to "Modeling To Functional" book styles (I rarely wrote it in pure OOP)'
     },
     {
       title: String20.create('SCSS'),
-      imgSrc: StringPath.create(''),
+      imgSrc: StringPath.create('/assets/images/sass-logo.jpg'),
       description:
         'SCSS providing a variable compiler that is the one of great theme customization tools'
     },
     {
       title: String20.create('Node.js'),
-      imgSrc: StringPath.create(''),
+      imgSrc: StringPath.create('/assets/images/node-js-logo.png'),
       description: ''
     },
     {
       title: String20.create('Mongo'),
-      imgSrc: StringPath.create(''),
-      description: ''
-    },
-    {
-      title: String20.create('DDD'),
-      imgSrc: StringPath.create(''),
-      description: ''
-    },
-    {
-      title: String20.create('OOP'),
-      imgSrc: StringPath.create(''),
+      imgSrc: StringPath.create('/assets/images/mongodb-logo.png'),
       description: ''
     }
   ];

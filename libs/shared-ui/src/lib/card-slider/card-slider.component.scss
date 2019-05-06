@@ -19,7 +19,7 @@
   border-radius: $global-box-border-radius;
   background: white;
   position: absolute;
-  padding: 2rem;
+  padding: 1rem;
 
   &.transition-move {
     transition: transform 0.5s;
@@ -43,22 +43,23 @@
 
   .bottom-section {
     position: absolute;
-    bottom: 0px;
-
-    h2 {
-      margin-left: 20px;
-    }
+    bottom: 1rem;
+    left: 1rem;
 
     .card-image {
-      border-radius: 50%;
       overflow: hidden;
       float: left;
       height: 40px;
       width: 40px;
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center center;
     }
 
     h2 {
-      margin-left: 40px;
+      margin: 0px;
+      line-height: 40px;
+      margin-left: calc(40px + 1rem);
       text-align: center;
     }
   }
@@ -87,6 +88,9 @@
     }
 
     .bottom-section {
+      left: 0.5rem;
+      bottom: 0.5rem;
+
       .card-image {
         height: 20px;
         width: 20px;
@@ -94,7 +98,8 @@
 
       h2 {
         font-size: 14px;
-        margin-left: 40px;
+        margin-left: calc(0.5rem + 20px);
+        line-height: 20px;
       }
     }
 
