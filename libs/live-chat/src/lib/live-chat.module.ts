@@ -1,7 +1,11 @@
-import { NgModule } from '@angular/core';
+import { NgModule, Inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
+import { AngularFireModule } from '@angular/fire';
+
+import { Environment } from '@nx-angular-resume/common-classes';
+
 import {
   LIVECHAT_FEATURE_KEY,
   initialState as liveChatInitialState,
@@ -13,6 +17,7 @@ import { LiveChatFacade } from './+state/live-chat.facade';
 @NgModule({
   imports: [
     CommonModule,
+    AngularFireModule.initializeApp(this.env.firebase),
     StoreModule.forFeature(LIVECHAT_FEATURE_KEY, liveChatReducer, {
       initialState: liveChatInitialState
     }),
@@ -20,4 +25,6 @@ import { LiveChatFacade } from './+state/live-chat.facade';
   ],
   providers: [LiveChatFacade]
 })
-export class LiveChatModule {}
+export class LiveChatModule {
+  constructor(private env: Environment) {}
+}

@@ -1,3 +1,16 @@
+class Environment {
+  production: boolean;
+  firebase: {
+    apiKey: string;
+    authDomain: string;
+    databaseURL: string;
+    projectId: string;
+    storageBucket: string;
+    messagingSenderId: string;
+    appId: string;
+  };
+}
+
 class String40 {
   private constructor(public value: string) {}
 
@@ -40,4 +53,4 @@ class StringURL {
   }
 }
 
-export { String40, String20, StringPath, StringURL };
+export { String40, String20, StringPath, StringURL, Environment };
