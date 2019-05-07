@@ -28,6 +28,9 @@
     },
     "live-chat": {
       "tags": []
+    },
+    "auth": {
+      "tags": []
     }
   }
 }
