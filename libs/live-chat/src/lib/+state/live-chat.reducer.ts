@@ -1,4 +1,5 @@
 import { LiveChatAction, LiveChatActionTypes } from './live-chat.actions';
+import { String150 } from '@nx-angular-resume/common-classes';
 
 export const LIVECHAT_FEATURE_KEY = 'liveChat';
 
@@ -10,11 +11,18 @@ export const LIVECHAT_FEATURE_KEY = 'liveChat';
  *  Note: replace if already defined in another module
  */
 
-/* tslint:disable:no-empty-interface */
+export class ValidatedUserID {}
+
+export interface message {
+  timeStamp: Date;
+  destination: ValidatedUserID;
+  description: String150;
+}
+
 export interface Entity {}
 
 export interface LiveChatState {
-  list: Entity[]; // list of LiveChat; analogous to a sql normalized table
+  list: message[]; // list of LiveChat; analogous to a sql normalized table
   selectedId?: string | number; // which LiveChat record has been selected
   loaded: boolean; // has the LiveChat list been loaded
   error?: any; // last none error (if any)

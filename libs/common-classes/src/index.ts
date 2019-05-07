@@ -11,6 +11,18 @@ class Environment {
   };
 }
 
+class String150 {
+  private constructor(public value: string) {}
+
+  public static create(value: string) {
+    if (value.length > 150) {
+      return new TypeError('String must has less than or equal 150 characters');
+    }
+
+    return new String150(value);
+  }
+}
+
 class String40 {
   private constructor(public value: string) {}
 
@@ -53,4 +65,4 @@ class StringURL {
   }
 }
 
-export { String40, String20, StringPath, StringURL, Environment };
+export { String150, String40, String20, StringPath, StringURL, Environment };

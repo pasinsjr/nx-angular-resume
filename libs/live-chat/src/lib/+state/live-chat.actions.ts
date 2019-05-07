@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { Entity } from './live-chat.reducer';
+import { message } from './live-chat.reducer';
 
 export enum LiveChatActionTypes {
   LoadLiveChat = '[LiveChat] Load LiveChat',
@@ -18,7 +18,7 @@ export class LiveChatLoadError implements Action {
 
 export class LiveChatLoaded implements Action {
   readonly type = LiveChatActionTypes.LiveChatLoaded;
-  constructor(public payload: Entity[]) {}
+  constructor(public payload: message[]) {}
 }
 
 export type LiveChatAction = LoadLiveChat | LiveChatLoaded | LiveChatLoadError;
