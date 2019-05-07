@@ -1,0 +1,29 @@
+@import '_variables';
+
+.live-chat-container {
+  width: 300px;
+  height: 350px;
+  position: fixed;
+  right: 1rem;
+  bottom: 0px;
+  border: 2px solid $primary-color;
+
+
+  .chat-header {
+    height: 50px;
+    width: 100%;
+    background: $second-color;
+    border-bottom: 2px solid $primary-color;
+  }
+
+  input {
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
+    outline: none;
+    border: none;
+    height: 50px;
+    border-top: 1px solid $primary-color;
+    padding: 1rem;
+  }
+}
