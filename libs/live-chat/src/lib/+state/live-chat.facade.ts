@@ -4,7 +4,7 @@ import { select, Store } from '@ngrx/store';
 
 import { LiveChatPartialState } from './live-chat.reducer';
 import { liveChatQuery } from './live-chat.selectors';
-import { LoadLiveChat } from './live-chat.actions';
+import { LoadLiveChat, ConnectLiveChat } from './live-chat.actions';
 
 @Injectable()
 export class LiveChatFacade {
@@ -15,6 +15,10 @@ export class LiveChatFacade {
   );
 
   constructor(private store: Store<LiveChatPartialState>) {}
+
+  connect() {
+    this.store.dispatch(new ConnectLiveChat());
+  }
 
   loadAll() {
     this.store.dispatch(new LoadLiveChat());

@@ -7,6 +7,7 @@ import {
 } from '@nx-angular-resume/common-classes';
 import { Observable } from 'rxjs';
 import { IUser, AuthFacade } from '@nx-angular-resume/auth';
+import { LiveChatFacade } from '@nx-angular-resume/live-chat';
 
 interface TimelineElement {
   header: String40;
@@ -114,10 +115,14 @@ export class DashboardComponent implements OnInit {
     }
   ];
 
-  constructor(private authFacade: AuthFacade) {}
+  constructor(
+    private authFacade: AuthFacade,
+    private livechatFacade: LiveChatFacade
+  ) {}
 
   ngOnInit() {
     this.authFacade.loadAuth();
+    this.livechatFacade.connect();
     this.user$ = this.authFacade.user$;
   }
 }

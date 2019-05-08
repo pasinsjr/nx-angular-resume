@@ -13,6 +13,10 @@ export const LIVECHAT_FEATURE_KEY = 'liveChat';
 
 export class ValidatedUserID {}
 
+export class MessagesCollection {
+  messages: Message[];
+}
+
 export interface Message {
   timeStamp: Date;
   destination: ValidatedUserID;
