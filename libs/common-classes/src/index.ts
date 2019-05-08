@@ -1,14 +1,16 @@
+class FirebaseEnvironment {
+  apiKey: string;
+  authDomain: string;
+  databaseURL: string;
+  projectId: string;
+  storageBucket: string;
+  messagingSenderId: string;
+  appId: string;
+}
+
 class Environment {
   production: boolean;
-  firebase: {
-    apiKey: string;
-    authDomain: string;
-    databaseURL: string;
-    projectId: string;
-    storageBucket: string;
-    messagingSenderId: string;
-    appId: string;
-  };
+  firebase: FirebaseEnvironment;
 }
 
 class String150 {
@@ -65,4 +67,12 @@ class StringURL {
   }
 }
 
-export { String150, String40, String20, StringPath, StringURL, Environment };
+export {
+  String150,
+  String40,
+  String20,
+  StringPath,
+  StringURL,
+  Environment,
+  FirebaseEnvironment
+};

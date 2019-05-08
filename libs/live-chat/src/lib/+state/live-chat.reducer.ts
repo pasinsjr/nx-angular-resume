@@ -13,7 +13,7 @@ export const LIVECHAT_FEATURE_KEY = 'liveChat';
 
 export class ValidatedUserID {}
 
-export interface message {
+export interface Message {
   timeStamp: Date;
   destination: ValidatedUserID;
   description: String150;
@@ -22,7 +22,7 @@ export interface message {
 export interface Entity {}
 
 export interface LiveChatState {
-  list: message[]; // list of LiveChat; analogous to a sql normalized table
+  list: Message[]; // list of LiveChat; analogous to a sql normalized table
   selectedId?: string | number; // which LiveChat record has been selected
   loaded: boolean; // has the LiveChat list been loaded
   error?: any; // last none error (if any)

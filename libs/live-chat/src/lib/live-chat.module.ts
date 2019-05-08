@@ -4,7 +4,8 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { AngularFireModule } from '@angular/fire';
 
-import { Environment } from '@nx-angular-resume/common-classes';
+// I have no solution for sharing env from app module here
+import { firebase } from '../environments/firebase-env';
 
 import {
   LIVECHAT_FEATURE_KEY,
@@ -13,11 +14,17 @@ import {
 } from './+state/live-chat.reducer';
 import { LiveChatEffects } from './+state/live-chat.effects';
 import { LiveChatFacade } from './+state/live-chat.facade';
+import { AngularFireAuthModule } from '@angular/fire/auth';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { AuthModule } from '@nx-angular-resume/auth';
 
 @NgModule({
   imports: [
     CommonModule,
-    AngularFireModule.initializeApp(this.env.firebase),
+    AngularFireModule.initializeApp(firebase),
+    AngularFireAuthModule,
+    AngularFirestoreModule,
+    AuthModule,
     StoreModule.forFeature(LIVECHAT_FEATURE_KEY, liveChatReducer, {
       initialState: liveChatInitialState
     }),
@@ -26,5 +33,5 @@ import { LiveChatFacade } from './+state/live-chat.facade';
   providers: [LiveChatFacade]
 })
 export class LiveChatModule {
-  constructor(private env: Environment) {}
+  constructor() {}
 }
