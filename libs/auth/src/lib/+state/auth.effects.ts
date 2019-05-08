@@ -24,7 +24,7 @@ export class AuthEffects {
     run: (action: LoadAuth, state: AuthPartialState) => {
       return this.afAuth.authState.pipe(
         map(authData =>
-          authData ? new AuthLoaded(null) : new AnonymousLogin()
+          authData ? new AuthLoaded(authData) : new AnonymousLogin()
         )
       );
     },
@@ -38,8 +38,11 @@ export class AuthEffects {
   @Effect() annonymousLogin$ = this.dataPersistence.fetch(
     AuthActionTypes.AnonymousLogin,
     {
-      run: (action: AnonymousLogin, state: AuthPartialState) => {},
-
+      run: (action: AnonymousLogin, state: AuthPartialState) => {
+        return from(this.afAuth.auth.signInAnonymously()).pipe(
+          map(credential => new LoadAuth())
+        );
+      },
       onError: (action: AnonymousLogin, error) => {
         console.error('Error', error);
         return new AuthLoadError(error);

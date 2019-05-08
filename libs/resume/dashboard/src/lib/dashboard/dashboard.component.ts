@@ -5,6 +5,8 @@ import {
   StringPath,
   StringURL
 } from '@nx-angular-resume/common-classes';
+import { Observable } from 'rxjs';
+import { IUser, AuthFacade } from '@nx-angular-resume/auth';
 
 interface TimelineElement {
   header: String40;
@@ -25,6 +27,8 @@ interface CardElement {
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
+  user$: Observable<IUser>;
+
   mockProfessionnalData: TimelineElement[] = [
     {
       header: String40.create('Exzy Co., Ltd.'),
@@ -110,7 +114,10 @@ export class DashboardComponent implements OnInit {
     }
   ];
 
-  constructor() {}
+  constructor(private authFacade: AuthFacade) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.authFacade.loadAuth();
+    this.user$ = this.authFacade.user$;
+  }
 }
