@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { IUser } from './auth.reducer';
+import { IUser } from '../auth.public-classes';
 
 export enum AuthActionTypes {
   LoadAuth = '[Auth] Load Auth',

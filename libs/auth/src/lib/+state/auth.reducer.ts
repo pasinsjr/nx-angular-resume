@@ -1,4 +1,5 @@
 import { AuthAction, AuthActionTypes } from './auth.actions';
+import { IUser } from '../auth.public-classes';
 
 export const AUTH_FEATURE_KEY = 'auth';
 
@@ -9,15 +10,6 @@ export const AUTH_FEATURE_KEY = 'auth';
  *
  *  Note: replace if already defined in another module
  */
-
-export interface IUser {
-  uid: string;
-  displayName: string;
-  photoURL: string;
-  loading?: boolean;
-  error?: string;
-}
-
 export interface AuthState {
   user: IUser; // list of Auth; analogous to a sql normalized table
   selectedId?: string | number; // which Auth record has been selected

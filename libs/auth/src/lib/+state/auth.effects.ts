@@ -17,6 +17,7 @@ import { map } from 'rxjs/operators';
 import { from } from 'rxjs';
 
 import { auth } from 'firebase/app';
+import { IUserId } from '../auth.public-classes';
 
 @Injectable()
 export class AuthEffects {
@@ -24,7 +25,9 @@ export class AuthEffects {
     run: (action: LoadAuth, state: AuthPartialState) => {
       return this.afAuth.authState.pipe(
         map(authData =>
-          authData ? new AuthLoaded(authData) : new AnonymousLogin()
+          authData
+            ? new AuthLoaded({ ...authData, uid: IUserId.create(authData.uid) })
+            : new AnonymousLogin()
         )
       );
     },
