@@ -15,29 +15,25 @@ const getError = createSelector(
   (state: LiveChatState) => state.error
 );
 
-const getAllLiveChat = createSelector(
+const getMessages = createSelector(
   getLiveChatState,
-  getLoaded,
-  (state: LiveChatState, isLoaded) => {
-    return isLoaded ? state.list : [];
-  }
+  (state: LiveChatState) => state.messages
 );
-const getSelectedId = createSelector(
+
+const getUnsendedMessages = createSelector(
   getLiveChatState,
-  (state: LiveChatState) => state.selectedId
+  (state: LiveChatState) => state.unsendedMessages
 );
-const getSelectedLiveChat = createSelector(
-  getAllLiveChat,
-  getSelectedId,
-  (liveChat, id) => {
-    const result = liveChat.find(it => it['id'] === id);
-    return result ? Object.assign({}, result) : undefined;
-  }
+
+const getErorrMessages = createSelector(
+  getLiveChatState,
+  (state: LiveChatState) => state.errorMessages
 );
 
 export const liveChatQuery = {
   getLoaded,
   getError,
-  getAllLiveChat,
-  getSelectedLiveChat
+  getMessages,
+  getUnsendedMessages,
+  getErorrMessages
 };

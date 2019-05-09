@@ -4,7 +4,7 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { AngularFireModule } from '@angular/fire';
 
-// I have no solution for sharing env from app module here
+// I have no solutions for sharing env from app module here
 import { firebase } from '../environments/firebase-env';
 
 import {

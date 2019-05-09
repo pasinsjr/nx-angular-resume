@@ -1,5 +1,6 @@
 import { LiveChatAction, LiveChatActionTypes } from './live-chat.actions';
 import { String150 } from '@nx-angular-resume/common-classes';
+import { UnsendedMessage, Message } from '../live-chat.public-classes';
 
 export const LIVECHAT_FEATURE_KEY = 'liveChat';
 
@@ -11,25 +12,13 @@ export const LIVECHAT_FEATURE_KEY = 'liveChat';
  *  Note: replace if already defined in another module
  */
 
-export class ValidatedUserID {}
-
-export class MessagesCollection {
-  messages: Message[];
-}
-
-export interface Message {
-  timeStamp: Date;
-  destination: ValidatedUserID;
-  description: String150;
-}
-
-export interface Entity {}
-
 export interface LiveChatState {
-  list: Message[]; // list of LiveChat; analogous to a sql normalized table
-  selectedId?: string | number; // which LiveChat record has been selected
-  loaded: boolean; // has the LiveChat list been loaded
-  error?: any; // last none error (if any)
+  messages: Message[];
+  unsendedMessages: UnsendedMessage[];
+  errorMessages: UnsendedMessage[];
+  selectedId?: string | number;
+  loaded: boolean;
+  error?: any;
 }
 
 export interface LiveChatPartialState {
@@ -37,7 +26,9 @@ export interface LiveChatPartialState {
 }
 
 export const initialState: LiveChatState = {
-  list: [],
+  messages: [],
+  unsendedMessages: [],
+  errorMessages: [],
   loaded: false
 };
 
@@ -49,8 +40,37 @@ export function liveChatReducer(
     case LiveChatActionTypes.LiveChatLoaded: {
       state = {
         ...state,
-        list: action.payload,
+        messages: action.payload,
         loaded: true
+      };
+      break;
+    }
+
+    case LiveChatActionTypes.SendMessage: {
+      state = {
+        ...state,
+        unsendedMessages: [...state.unsendedMessages, action.message]
+      };
+      break;
+    }
+
+    case LiveChatActionTypes.SendMessageError: {
+      state = {
+        ...state,
+        unsendedMessages: state.unsendedMessages.filter(
+          message => message.id !== action.message.id
+        ),
+        errorMessages: [...state.errorMessages, action.message]
+      };
+    }
+
+    case LiveChatActionTypes.ResendMessage: {
+      state = {
+        ...state,
+        unsendedMessages: [...state.unsendedMessages, action.message],
+        errorMessages: state.errorMessages.filter(
+          message => message.id !== action.message.id
+        )
       };
       break;
     }

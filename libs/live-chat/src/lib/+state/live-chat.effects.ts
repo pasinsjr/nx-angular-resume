@@ -2,25 +2,23 @@ import { Injectable } from '@angular/core';
 import { Effect, Actions } from '@ngrx/effects';
 import { DataPersistence } from '@nrwl/nx';
 
+import { LiveChatPartialState } from './live-chat.reducer';
 import {
-  LiveChatPartialState,
-  Message,
-  MessagesCollection
-} from './live-chat.reducer';
-import {
-  LoadLiveChat,
-  LiveChatLoaded,
   LiveChatConnectError,
   LiveChatActionTypes,
   ConnectLiveChat,
   UpdateMessage,
-  NotFoundCollectionsError
+  NotFoundCollectionsError,
+  SendMessage,
+  SendMessageError,
+  AlreadySendMessage
 } from './live-chat.actions';
 
 import { AngularFirestore } from '@angular/fire/firestore';
-import { IUser, AuthFacade } from '@nx-angular-resume/auth';
+import { AuthFacade } from '@nx-angular-resume/auth';
 import { switchMap, map, filter, take } from 'rxjs/operators';
 import { from } from 'rxjs';
+import { Message } from '../live-chat.public-classes';
 
 @Injectable()
 export class LiveChatEffects {
@@ -32,9 +30,9 @@ export class LiveChatEffects {
           filter(user => (user ? true : false)),
           switchMap(user =>
             this.afs
-              .doc<MessagesCollection>(`messages/${user.uid}`)
+              .collection<Message>(`messages/${user.uid}/messages`)
               .valueChanges()
-              .pipe(map(response => new UpdateMessage(response.messages)))
+              .pipe(map(messages => new UpdateMessage(messages)))
           )
         );
       },
@@ -57,8 +55,8 @@ export class LiveChatEffects {
           switchMap(user =>
             from(
               this.afs
-                .collection<MessagesCollection>('messages')
-                .doc(user.uid)
+                .collection<Message>('messages')
+                .doc(user.uid.value)
                 .set({ messages: [] })
             ).pipe(
               take(1),
@@ -74,19 +72,24 @@ export class LiveChatEffects {
     }
   );
 
-  @Effect() loadLiveChat$ = this.dataPersistence.fetch(
-    LiveChatActionTypes.LoadLiveChat,
+  @Effect() SendMessage$ = this.dataPersistence.optimisticUpdate(
+    LiveChatActionTypes.SendMessage,
     {
-      run: (action: LoadLiveChat, state: LiveChatPartialState) => {
-        // Your custom REST 'load' logic goes here. For now just return an empty list...
-        return;
-
-        new LiveChatLoaded([]);
+      run: (action: SendMessage, state: LiveChatPartialState) => {
+        return this.authFacade.user$.pipe(
+          filter(user => (user ? true : false)),
+          switchMap(user =>
+            from(
+              this.afs
+                .collection<Message>(`messages/${user.uid}/messages`)
+                .add({ ...action.message, timeStamp: new Date() })
+            ).pipe(map(response => new AlreadySendMessage(action.message)))
+          )
+        );
       },
-
-      onError: (action: LoadLiveChat, error) => {
+      undoAction: (action: SendMessage, error) => {
         console.error('Error', error);
-        return new LiveChatConnectError(error);
+        return new SendMessageError(action.message);
       }
     }
   );
