@@ -17,7 +17,12 @@ import { map } from 'rxjs/operators';
 import { from } from 'rxjs';
 
 import { auth } from 'firebase/app';
-import { IUserId } from '../auth.public-classes';
+import {
+  IUserId,
+  GoogleAnonymousUser,
+  GoogleUser
+} from '../auth.public-classes';
+import { StringURL } from '@nx-angular-resume/common-classes';
 
 @Injectable()
 export class AuthEffects {
@@ -26,7 +31,14 @@ export class AuthEffects {
       return this.afAuth.authState.pipe(
         map(authData =>
           authData
-            ? new AuthLoaded({ ...authData, uid: IUserId.create(authData.uid) })
+            ? new AuthLoaded(
+                authData.isAnonymous
+                  ? new GoogleAnonymousUser(IUserId.create(authData.uid))
+                  : new GoogleUser(
+                      IUserId.create(authData.uid),
+                      StringURL.create(authData.photoURL)
+                    )
+              )
             : new AnonymousLogin()
         )
       );
