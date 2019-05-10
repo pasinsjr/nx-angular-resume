@@ -2,23 +2,51 @@ import { Injectable } from '@angular/core';
 import { Effect, Actions } from '@ngrx/effects';
 import { DataPersistence } from '@nrwl/nx';
 
-import { LiveChatPartialState } from './live-chat.reducer';
+import {
+  LiveChatPartialState,
+  LIVECHAT_FEATURE_KEY
+} from './live-chat.reducer';
 import {
   LiveChatConnectError,
   LiveChatActionTypes,
   ConnectLiveChat,
-  UpdateMessage,
   NotFoundCollectionsError,
   SendMessage,
   SendMessageError,
-  AlreadySendMessage
+  AlreadySendMessage,
+  UpdateMessages
 } from './live-chat.actions';
 
 import { AngularFirestore } from '@angular/fire/firestore';
-import { AuthFacade } from '@nx-angular-resume/auth';
-import { switchMap, map, filter, take } from 'rxjs/operators';
-import { from } from 'rxjs';
+import { AuthFacade, IUserId } from '@nx-angular-resume/auth';
+import { switchMap, map, filter, take, withLatestFrom } from 'rxjs/operators';
+import { from, of } from 'rxjs';
+import { String150 } from '@nx-angular-resume/common-classes';
 import { Message } from '../live-chat.public-classes';
+
+interface CommonTypeMessage {
+  timeStamp: Date;
+  destination: string;
+  description: string;
+}
+
+const messageToCommon = (message: Message) => ({
+  ...message,
+  destination: message.destination.value,
+  description: message.description.value
+});
+
+const commonToMessage = (message: CommonTypeMessage) => ({
+  ...message,
+  destination: IUserId.create(message.destination),
+  description: String150.create(message.description)
+});
+
+const commonToMessageAdapter = (messages: CommonTypeMessage[]) =>
+  messages.map(commonToMessage);
+
+const messageToCommonAdapter = (messages: Message[]) =>
+  messages.map(messageToCommon);
 
 @Injectable()
 export class LiveChatEffects {
@@ -26,20 +54,24 @@ export class LiveChatEffects {
     LiveChatActionTypes.ConnectLiveChat,
     {
       run: (action: ConnectLiveChat, state: LiveChatPartialState) => {
-        return this.authFacade.user$.pipe(
-          filter(user => (user ? true : false)),
-          switchMap(user =>
-            this.afs
-              .collection<Message>(`messages/${user.uid}/messages`)
-              .valueChanges()
-              .pipe(map(messages => new UpdateMessage(messages)))
+        return this.afs
+          .collection<CommonTypeMessage>(
+            `messages/${action.userId.value}/${action.destinationId.value}`
           )
-        );
+          .valueChanges()
+          .pipe(
+            map(commonToMessageAdapter),
+            map(
+              messages =>
+                new UpdateMessages(
+                  messages.sort((cur, next) =>
+                    cur.timeStamp > next.timeStamp ? 1 : -1
+                  )
+                )
+            )
+          );
       },
       onError: (action: ConnectLiveChat, error) => {
-        console.error('Error', error);
-        if (error.code === 'invalid-argument')
-          return new NotFoundCollectionsError(error);
         return new LiveChatConnectError(error);
       }
     }
@@ -49,19 +81,23 @@ export class LiveChatEffects {
     LiveChatActionTypes.NotFoundCollectionsError,
     {
       run: (action: NotFoundCollectionsError, state: LiveChatPartialState) => {
-        return this.authFacade.user$.pipe(
-          filter(user => (user ? true : false)),
+        return from(
+          this.afs
+            .doc(`messages/${state[LIVECHAT_FEATURE_KEY].userId.value}`)
+            .collection(state[LIVECHAT_FEATURE_KEY].destinationId.value)
+            .add({
+              timeStamp: new Date(),
+              description: action.message.description.value,
+              destination: action.message.destination.value
+            })
+        ).pipe(
           take(1),
-          switchMap(user =>
-            from(
-              this.afs
-                .collection<Message>('messages')
-                .doc(user.uid.value)
-                .set({ messages: [] })
-            ).pipe(
-              take(1),
-              map(result => new ConnectLiveChat())
-            )
+          map(
+            result =>
+              new ConnectLiveChat(
+                state[LIVECHAT_FEATURE_KEY].userId,
+                state[LIVECHAT_FEATURE_KEY].destinationId
+              )
           )
         );
       },
@@ -76,19 +112,25 @@ export class LiveChatEffects {
     LiveChatActionTypes.SendMessage,
     {
       run: (action: SendMessage, state: LiveChatPartialState) => {
-        return this.authFacade.user$.pipe(
-          filter(user => (user ? true : false)),
-          switchMap(user =>
-            from(
-              this.afs
-                .collection<Message>(`messages/${user.uid}/messages`)
-                .add({ ...action.message, timeStamp: new Date() })
-            ).pipe(map(response => new AlreadySendMessage(action.message)))
-          )
-        );
+        return from(
+          this.afs
+            .collection<CommonTypeMessage>(
+              `messages/${state[LIVECHAT_FEATURE_KEY].userId.value}/${
+                state[LIVECHAT_FEATURE_KEY].destinationId.value
+              }`
+            )
+            .add({
+              timeStamp: new Date(),
+              description: action.message.description.value,
+              destination: action.message.destination.value
+            })
+        ).pipe(map(response => new AlreadySendMessage(action.message)));
       },
       undoAction: (action: SendMessage, error) => {
         console.error('Error', error);
+        console.dir(error);
+        if (error.code === 'permission-denied')
+          return new NotFoundCollectionsError(action.message);
         return new SendMessageError(action.message);
       }
     }

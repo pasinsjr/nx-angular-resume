@@ -1,6 +1,7 @@
 import { LiveChatAction, LiveChatActionTypes } from './live-chat.actions';
 import { String150 } from '@nx-angular-resume/common-classes';
 import { UnsendedMessage, Message } from '../live-chat.public-classes';
+import { IUserId } from '@nx-angular-resume/auth';
 
 export const LIVECHAT_FEATURE_KEY = 'liveChat';
 
@@ -16,7 +17,8 @@ export interface LiveChatState {
   messages: Message[];
   unsendedMessages: UnsendedMessage[];
   errorMessages: UnsendedMessage[];
-  selectedId?: string | number;
+  userId: IUserId;
+  destinationId: IUserId;
   loaded: boolean;
   error?: any;
 }
@@ -29,6 +31,8 @@ export const initialState: LiveChatState = {
   messages: [],
   unsendedMessages: [],
   errorMessages: [],
+  userId: null,
+  destinationId: null,
   loaded: false
 };
 
@@ -37,11 +41,18 @@ export function liveChatReducer(
   action: LiveChatAction
 ): LiveChatState {
   switch (action.type) {
-    case LiveChatActionTypes.LiveChatLoaded: {
+    case LiveChatActionTypes.ConnectLiveChat: {
       state = {
         ...state,
-        messages: action.payload,
-        loaded: true
+        userId: action.userId,
+        destinationId: action.destinationId
+      };
+      break;
+    }
+    case LiveChatActionTypes.UpdateMessages: {
+      state = {
+        ...state,
+        messages: action.messages
       };
       break;
     }

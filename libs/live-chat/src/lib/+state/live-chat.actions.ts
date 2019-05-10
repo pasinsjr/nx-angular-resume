@@ -1,5 +1,6 @@
 import { Action } from '@ngrx/store';
 import { Message, UnsendedMessage } from '../live-chat.public-classes';
+import { IUserId, IUser } from '@nx-angular-resume/auth';
 
 export enum LiveChatActionTypes {
   LoadLiveChat = '[LiveChat] Load LiveChat',
@@ -20,11 +21,12 @@ export class LoadLiveChat implements Action {
 
 export class ConnectLiveChat implements Action {
   readonly type = LiveChatActionTypes.ConnectLiveChat;
+  constructor(public userId: IUserId, public destinationId: IUserId) {}
 }
 
-export class UpdateMessage implements Action {
+export class UpdateMessages implements Action {
   readonly type = LiveChatActionTypes.UpdateMessages;
-  constructor(public payload: Message[]) {}
+  constructor(public messages: Message[]) {}
 }
 
 export class SendMessage implements Action {
@@ -54,7 +56,7 @@ export class LiveChatConnectError implements Action {
 
 export class NotFoundCollectionsError implements Action {
   readonly type = LiveChatActionTypes.NotFoundCollectionsError;
-  constructor(public payload: any) {}
+  constructor(public message: UnsendedMessage) {}
 }
 
 export class LiveChatLoaded implements Action {
@@ -68,6 +70,7 @@ export type LiveChatAction =
   | SendMessage
   | ResendMessage
   | AlreadySendMessage
+  | UpdateMessages
   | SendMessageError
   | LiveChatLoaded
   | LiveChatConnectError
@@ -83,6 +86,7 @@ export const fromLiveChatActions = {
   ConnectLiveChat,
   SendMessage,
   AlreadySendMessage,
+  UpdateMessages,
   SendMessageError,
   LiveChatLoaded,
   LiveChatConnectError,

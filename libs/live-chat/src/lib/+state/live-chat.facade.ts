@@ -30,8 +30,8 @@ export class LiveChatFacade {
 
   constructor(private store: Store<LiveChatPartialState>) {}
 
-  connect() {
-    this.store.dispatch(new ConnectLiveChat());
+  connect(iUserId: IUserId, destinationId: IUserId) {
+    this.store.dispatch(new ConnectLiveChat(iUserId, destinationId));
   }
 
   sendMessage(destinationUser: IUserId, message: String150) {
