@@ -1,13 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import {
   String40,
   String20,
   StringPath,
-  StringURL
+  StringURL,
+  Environment,
+  String150
 } from '@nx-angular-resume/common-classes';
-import { Observable } from 'rxjs';
-import { IUser, AuthFacade } from '@nx-angular-resume/auth';
-import { LiveChatFacade } from '@nx-angular-resume/live-chat';
+import { Observable, Subject } from 'rxjs';
+import { IUser, AuthFacade, IUserId } from '@nx-angular-resume/auth';
+import { LiveChatFacade, Message } from '@nx-angular-resume/live-chat';
+import { filter, takeUntil } from 'rxjs/operators';
 
 interface TimelineElement {
   header: String40;
@@ -27,8 +30,10 @@ interface CardElement {
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent implements OnInit, OnDestroy {
   user$: Observable<IUser>;
+  message$: Observable<Message[]>;
+  annonymousMode$: Observable<boolean>;
 
   mockProfessionnalData: TimelineElement[] = [
     {
@@ -115,14 +120,46 @@ export class DashboardComponent implements OnInit {
     }
   ];
 
+  private unsubscribe: Subject<void> = new Subject();
+
   constructor(
     private authFacade: AuthFacade,
-    private livechatFacade: LiveChatFacade
+    private livechatFacade: LiveChatFacade,
+    private env: Environment
   ) {}
 
   ngOnInit() {
     this.authFacade.loadAuth();
-    this.livechatFacade.connect();
     this.user$ = this.authFacade.user$;
+    this.annonymousMode$ = this.authFacade.isAnnonymous$;
+
+    this.user$
+      .pipe(
+        filter(user => (user ? true : false)),
+        takeUntil(this.unsubscribe)
+      )
+      .subscribe(user => {
+        this.livechatFacade.connect(
+          user.uid,
+          IUserId.create(this.env.profileId)
+        );
+        this.message$ = this.livechatFacade.messages$;
+      });
+  }
+
+  ngOnDestroy() {
+    this.unsubscribe.next();
+    this.unsubscribe.complete();
+  }
+
+  sendMessage(message: String150): void {
+    this.livechatFacade.sendMessage(
+      IUserId.create(this.env.profileId),
+      message
+    );
+  }
+
+  googleSingIn(): void {
+    this.authFacade.loginWithGoogle();
   }
 }
