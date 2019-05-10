@@ -1,5 +1,6 @@
 import { GoogleLogin } from './+state/auth.actions';
 import { inherits } from 'util';
+import { StringURL, StringPath } from '@nx-angular-resume/common-classes';
 
 export class IUserId {
   private constructor(public value: string) {}
@@ -16,15 +17,18 @@ export interface IUser {
 }
 
 export class GoogleUser implements IUser {
-  uid: IUserId;
-  displayName: string;
-  photoURL: string;
-  loading?: boolean;
-  error?: string;
+  constructor(
+    public uid: IUserId,
+    public photoURL: StringURL | StringPath,
+    public loading: boolean = false,
+    public error: string = null
+  ) {}
 }
 
 export class GoogleAnonymousUser implements IUser {
-  uid: IUserId;
-  loading?: boolean;
-  error?: string;
+  constructor(
+    public uid: IUserId,
+    public loading: boolean = false,
+    public error: string = null
+  ) {}
 }
