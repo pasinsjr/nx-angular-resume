@@ -11,6 +11,7 @@ class FirebaseEnvironment {
 class Environment {
   production: boolean;
   firebase: FirebaseEnvironment;
+  profileId: string;
 }
 
 class String150 {
@@ -18,7 +19,7 @@ class String150 {
 
   public static create(value: string) {
     if (value.length > 150) {
-      return new TypeError('String must has less than or equal 150 characters');
+      throw new TypeError('String must has less than or equal 150 characters');
     }
 
     return new String150(value);
