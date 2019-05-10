@@ -16,6 +16,27 @@
     border-bottom: 2px solid $primary-color;
   }
 
+  .chat-box {
+    height: calc(100% - 100px);
+    width: 100%;
+    overflow-y: scroll;
+    background: white;
+
+    .message-box {
+      clear: both;
+
+      .our-message {
+        float: right;
+        background: $primary-color;
+      }
+
+      .their-message {
+        float: left;
+        background: $second-color;
+      }
+    }
+  }
+
   input {
     position: absolute;
     bottom: 0px;

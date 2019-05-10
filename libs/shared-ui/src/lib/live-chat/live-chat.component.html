@@ -1,9 +1,15 @@
 <div class="live-chat-container">
   <div class="chat-header">
-
+    <p *ngIf="anonymousMode" (click)="emitLinkAccount()">
+      Link session with google account for using in another device.
+    </p>
   </div>
-  <div class="chat-box">
-
+  <div class="chat-box" #chatBox>
+    <div class="message-box">
+      <div class="my-message" *ngFor="let message of _messages">
+        <p>{{ message.description.value }}</p>
+      </div>
+    </div>
   </div>
-  <input>
+  <input type="text" [(ngModel)]="testInput" (keydown.enter)="emitMessage()" />
 </div>
