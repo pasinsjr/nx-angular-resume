@@ -17,6 +17,7 @@ import { LiveChatFacade } from './+state/live-chat.facade';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AuthModule } from '@nx-angular-resume/auth';
+import { LiveChatService } from './live-chat.service';
 
 @NgModule({
   imports: [
@@ -30,7 +31,7 @@ import { AuthModule } from '@nx-angular-resume/auth';
     }),
     EffectsModule.forFeature([LiveChatEffects])
   ],
-  providers: [LiveChatFacade]
+  providers: [LiveChatFacade, LiveChatService]
 })
 export class LiveChatModule {
   constructor() {}
