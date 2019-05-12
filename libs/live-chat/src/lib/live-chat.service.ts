@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { Observable, from } from 'rxjs';
+import { Observable, from, combineLatest } from 'rxjs';
 import { Message, UnsendedMessage } from './live-chat.public-classes';
 import { IUserId, IUser } from '@nx-angular-resume/auth';
 import { String150 } from '@nx-angular-resume/common-classes';
@@ -37,13 +37,26 @@ export class LiveChatService {
     userId: IUserId,
     destinationId: IUserId
   ): Observable<Message[]> {
-    return this.afs
-      .collection<CommonTypeMessage>(
-        `messages/${userId.value}/${destinationId.value}`,
-        ref => ref.orderBy('timeStamp').limit(50) //Available only 50 last.
-      )
-      .valueChanges()
-      .pipe(map(commonToMessageAdapter));
+    return combineLatest(
+      this.afs
+        .collection<CommonTypeMessage>(
+          `messages/${userId.value}/${destinationId.value}`,
+          ref => ref.orderBy('timeStamp').limit(50) //Available only 50 last.
+        )
+        .valueChanges()
+        .pipe(map(commonToMessageAdapter)),
+      this.afs
+        .collection<CommonTypeMessage>(
+          `messages/${destinationId.value}/${userId.value}`,
+          ref => ref.orderBy('timeStamp').limit(50) //Available only 50 last.
+        )
+        .valueChanges()
+        .pipe(map(commonToMessageAdapter)),
+      (userMesages, destinationMessages) =>
+        [...userMesages, ...destinationMessages].sort((cur, next) =>
+          cur.timeStamp > next.timeStamp ? 1 : -1
+        )
+    );
   }
 
   createNewSession(
