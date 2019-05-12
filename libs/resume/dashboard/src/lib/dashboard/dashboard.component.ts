@@ -10,7 +10,7 @@ import {
 import { Observable, Subject } from 'rxjs';
 import { IUser, AuthFacade, IUserId } from '@nx-angular-resume/auth';
 import { LiveChatFacade, Message } from '@nx-angular-resume/live-chat';
-import { filter, takeUntil } from 'rxjs/operators';
+import { filter, takeUntil, map } from 'rxjs/operators';
 
 interface TimelineElement {
   header: String40;

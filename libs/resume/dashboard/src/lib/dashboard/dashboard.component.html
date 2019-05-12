@@ -19,7 +19,9 @@
       <nx-angular-resume-card-slider [cards]="mockTechStack"></nx-angular-resume-card-slider>
     </div>
   </div>
-  <nx-angular-resume-live-chat [messages]="message$ | async" [anonymousMode]="annonymousMode$ | async"
-    (linkAccount)="googleSingIn()" (sendMessage)="sendMessage($event)">
-  </nx-angular-resume-live-chat>
+  <div *ngIf="user$ | async as user">
+    <nx-angular-resume-live-chat [messages]="message$ | async" [user]="user" [anonymousMode]="annonymousMode$ | async"
+      (linkAccount)="googleSingIn()" (sendMessage)="sendMessage($event)">
+    </nx-angular-resume-live-chat>
+  </div>
 </div>
