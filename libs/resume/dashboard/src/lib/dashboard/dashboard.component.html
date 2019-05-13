@@ -20,7 +20,8 @@
     </div>
   </div>
   <div *ngIf="user$ | async as user">
-    <nx-angular-resume-live-chat [messages]="message$ | async" [user]="user" [anonymousMode]="annonymousMode$ | async"
+    <nx-angular-resume-live-chat [messages]="message$ | async" [user]="user"
+      [destinationUser]="destinationChatUser$ | async" [anonymousMode]="annonymousMode$ | async"
       (linkAccount)="googleSingIn()" (sendMessage)="sendMessage($event)">
     </nx-angular-resume-live-chat>
   </div>

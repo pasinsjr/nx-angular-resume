@@ -9,6 +9,7 @@ import {
 } from '@nx-angular-resume/common-classes';
 import { Observable, Subject } from 'rxjs';
 import { IUser, AuthFacade, IUserId } from '@nx-angular-resume/auth';
+import { UserFacade } from '@nx-angular-resume/user';
 import { LiveChatFacade, Message } from '@nx-angular-resume/live-chat';
 import { filter, takeUntil, map } from 'rxjs/operators';
 
@@ -32,10 +33,20 @@ interface CardElement {
 })
 export class DashboardComponent implements OnInit, OnDestroy {
   user$: Observable<IUser>;
+  destinationChatUser$: Observable<IUser>;
   message$: Observable<Message[]>;
   annonymousMode$: Observable<boolean>;
 
   mockProfessionnalData: TimelineElement[] = [
+    {
+      header: String40.create('Exzy Co., Ltd.'),
+      timeRange: String40.create('Jan’19 – March’19 '),
+      secondDescription: 'VR Showcase | Full Stack Developer',
+      detailLines: [
+        'Be an initiator of VR Showcase application which shows 360° models (generating from other apps in platform) in VR mode',
+        'Environment: Firebase (Angularfire2), A-frame (A web framework for building VR), Angular 6, NgRx (RxJS state management inspired by Redux),'
+      ]
+    },
     {
       header: String40.create('Exzy Co., Ltd.'),
       timeRange: String40.create('July’16 – March’19 '),
@@ -109,6 +120,11 @@ export class DashboardComponent implements OnInit, OnDestroy {
         'SCSS providing a variable compiler that is the one of great theme customization tools'
     },
     {
+      title: String20.create('Firebase'),
+      imgSrc: StringPath.create('/assets/images/firebase-logo.png'),
+      description: ''
+    },
+    {
       title: String20.create('Node.js'),
       imgSrc: StringPath.create('/assets/images/node-js-logo.png'),
       description: ''
@@ -125,6 +141,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   constructor(
     private authFacade: AuthFacade,
     private livechatFacade: LiveChatFacade,
+    private userFacade: UserFacade,
     private env: Environment
   ) {}
 
@@ -142,6 +159,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
         this.livechatFacade.connect(
           user.uid,
           IUserId.create(this.env.profileId)
+        );
+        this.destinationChatUser$ = this.userFacade.getSelectedUser(
+          this.env.profileId
         );
         this.message$ = this.livechatFacade.messages$;
       });

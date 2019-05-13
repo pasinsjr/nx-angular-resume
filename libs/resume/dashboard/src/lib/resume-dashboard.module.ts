@@ -7,21 +7,27 @@ import { AuthModule } from '@nx-angular-resume/auth';
 import { SharedUiModule } from '@nx-angular-resume/shared-ui';
 import { LiveChatModule } from '@nx-angular-resume/live-chat';
 
+// I have no solutions for sharing env from app module here
+import { firebase } from '../environments/firebase-env';
+
 import { NxModule } from '@nrwl/nx';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
-import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { AngularFireModule } from '@angular/fire';
+import { UserModule } from '@nx-angular-resume/user';
 
 @NgModule({
   imports: [
     CommonModule,
     SharedUiModule,
+    AngularFireModule.initializeApp(firebase),
     NxModule.forRoot(),
     StoreModule.forRoot([]),
     EffectsModule.forRoot([]),
     ResumeUiModule,
     DashboardRouthingModule,
     AuthModule,
+    UserModule,
     LiveChatModule
   ],
   declarations: [DashboardComponent]
