@@ -31,11 +31,17 @@ export class AuthLoaded implements Action {
   constructor(public payload: IUser) {}
 }
 
-export type AuthAction = LoadAuth | AuthLoaded | AuthLoadError;
+export type AuthAction =
+  | LoadAuth
+  | AuthLoaded
+  | AuthLoadError
+  | GoogleLogin
+  | AnonymousLogin;
 
 export const fromAuthActions = {
   LoadAuth,
   AnonymousLogin,
+  GoogleLogin,
   AuthLoaded,
   AuthLoadError
 };

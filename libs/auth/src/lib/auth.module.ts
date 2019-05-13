@@ -9,10 +9,14 @@ import {
 } from './+state/auth.reducer';
 import { AuthEffects } from './+state/auth.effects';
 import { AuthFacade } from './+state/auth.facade';
+import { AngularFireAuthModule } from '@angular/fire/auth';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
 
 @NgModule({
   imports: [
     CommonModule,
+    AngularFireAuthModule,
+    AngularFirestoreModule,
     StoreModule.forFeature(AUTH_FEATURE_KEY, authReducer, {
       initialState: authInitialState
     }),

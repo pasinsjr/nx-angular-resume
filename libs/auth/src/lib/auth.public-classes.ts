@@ -10,14 +10,16 @@ export class IUserId {
 
 export interface IUser {
   uid: IUserId;
+  name: string;
   loading?: boolean;
   error?: string;
-  photoUrl?: StringURL | StringPath;
+  photoURL?: StringURL | StringPath;
 }
 
 export class GoogleUser implements IUser {
   constructor(
     public uid: IUserId,
+    public name: string,
     public photoURL: StringURL | StringPath,
     public loading: boolean = false,
     public error: string = null
@@ -27,7 +29,8 @@ export class GoogleUser implements IUser {
 export class GoogleAnonymousUser implements IUser {
   constructor(
     public uid: IUserId,
-    public photoUrl: StringURL | StringPath = StringPath.create(
+    public name: string = 'Anonymous',
+    public photoURL: StringURL | StringPath = StringPath.create(
       '/assets/images/anonymous.png'
     ),
     public loading: boolean = false,

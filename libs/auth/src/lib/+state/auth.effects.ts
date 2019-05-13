@@ -23,6 +23,7 @@ import {
   GoogleUser
 } from '../auth.public-classes';
 import { StringURL } from '@nx-angular-resume/common-classes';
+import { AngularFirestore } from '@angular/fire/firestore';
 
 @Injectable()
 export class AuthEffects {
@@ -36,6 +37,7 @@ export class AuthEffects {
                   ? new GoogleAnonymousUser(IUserId.create(authData.uid))
                   : new GoogleUser(
                       IUserId.create(authData.uid),
+                      authData.displayName,
                       StringURL.create(authData.photoURL)
                     )
               )
@@ -81,6 +83,7 @@ export class AuthEffects {
 
   constructor(
     private actions$: Actions,
+    private afs: AngularFirestore,
     private afAuth: AngularFireAuth,
     private dataPersistence: DataPersistence<AuthPartialState>
   ) {}

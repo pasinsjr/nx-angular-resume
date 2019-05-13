@@ -11,7 +11,8 @@ import { DataPersistence } from '@nrwl/nx';
 import { hot } from '@nrwl/nx/testing';
 
 import { AuthEffects } from './auth.effects';
-import { LoadAuth, AuthLoaded } from './auth.actions';
+import { LoadAuth } from './auth.actions';
+import { GoogleAnonymousUser, IUserId } from '../auth.public-classes';
 
 describe('AuthEffects', () => {
   let actions: Observable<any>;
@@ -37,8 +38,9 @@ describe('AuthEffects', () => {
   describe('loadAuth$', () => {
     it('should work', () => {
       actions = hot('-a-|', { a: new LoadAuth() });
+      expect(effects.loadAuth$).toBe;
       expect(effects.loadAuth$).toBeObservable(
-        hot('-a-|', { a: new AuthLoaded([]) })
+        hot('-a-|', { a: new GoogleAnonymousUser(IUserId.create('xxxxxxxx')) })
       );
     });
   });
