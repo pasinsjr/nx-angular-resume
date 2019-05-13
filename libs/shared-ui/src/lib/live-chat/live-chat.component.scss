@@ -1,5 +1,16 @@
 @import '_variables';
 
+.user-image {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-size: cover;
+  background-position: center center;
+  overflow: hidden;
+}
+
+
 .live-chat-container {
   width: 300px;
   height: 350px;
@@ -14,10 +25,15 @@
     width: 100%;
     background: $second-color;
     border-bottom: 2px solid $primary-color;
+    padding: 5px;
+
+    .link-anonymous {
+      cursor: pointer;
+    }
   }
 
   .chat-box {
-    height: calc(100% - 120px);
+    height: calc(100% - 100px);
     width: 100%;
     overflow-y: scroll;
     background: white;
@@ -45,12 +61,13 @@
     bottom: 0px;
     width: 100%;
     height: 50px;
-    padding-left: 40px;
+    padding-right: 40px;
     border-top: 1px solid $primary-color;
+    background: white;
 
     .user-image {
       position: absolute;
-      left: 5px;
+      right: 5px;
       top: 5px;
       width: 40px;
       height: 40px;

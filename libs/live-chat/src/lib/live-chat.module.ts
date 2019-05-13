@@ -2,10 +2,6 @@ import { NgModule, Inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
-import { AngularFireModule } from '@angular/fire';
-
-// I have no solutions for sharing env from app module here
-import { firebase } from '../environments/firebase-env';
 
 import {
   LIVECHAT_FEATURE_KEY,
@@ -22,7 +18,6 @@ import { LiveChatService } from './live-chat.service';
 @NgModule({
   imports: [
     CommonModule,
-    AngularFireModule.initializeApp(firebase),
     AngularFireAuthModule,
     AngularFirestoreModule,
     AuthModule,

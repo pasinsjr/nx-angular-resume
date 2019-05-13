@@ -1,8 +1,9 @@
 <div class="live-chat-container">
   <div class="chat-header">
-    <p *ngIf="anonymousMode" (click)="emitLinkAccount()">
+    <div class="user-image" [style.background-image]="'url('+ destinationUser?.photoURL?.value+ ')'"></div>
+    <div *ngIf="anonymousMode" class="link-anonymous" (click)="emitLinkAccount()">
       Link session with google account for using in another device.
-    </p>
+    </div>
   </div>
   <div class="chat-box" #chatBox>
     <div class="message-box" *ngFor="let message of _messages">
@@ -12,7 +13,7 @@
     </div>
   </div>
   <div class="input">
-    <div class="user-image" [style.background-image]="'url('+ user.photoUrl.value+ ')'"></div>
+    <div class="user-image" [style.background-image]="'url('+ user.photoURL.value+ ')'"></div>
     <input type="text" [(ngModel)]="testInput" (keydown.enter)="emitMessage()" />
   </div>
 </div>
