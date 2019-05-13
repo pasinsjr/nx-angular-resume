@@ -163,6 +163,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
         this.destinationChatUser$ = this.userFacade.getSelectedUser(
           this.env.profileId
         );
+        this.userFacade.updateUser(user);
         this.message$ = this.livechatFacade.messages$;
       });
   }
