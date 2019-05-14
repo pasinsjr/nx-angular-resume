@@ -2,25 +2,15 @@ import { Injectable } from '@angular/core';
 
 import { select, Store } from '@ngrx/store';
 
-import { UUID } from 'angular2-uuid';
-
 import { LiveChatPartialState } from './live-chat.reducer';
 import { liveChatQuery } from './live-chat.selectors';
-import {
-  LoadLiveChat,
-  ConnectLiveChat,
-  SendMessage
-} from './live-chat.actions';
+import { ConnectLiveChat, PrepareToSendMessage } from './live-chat.actions';
 import { String150 } from '@nx-angular-resume/common-classes';
-import {
-  UnsendedMessage,
-  UnsendedMessageId
-} from '../live-chat.public-classes';
-import { IUserId } from '@nx-angular-resume/auth';
+import { UserId } from '@nx-angular-resume/user';
 
 @Injectable()
 export class LiveChatFacade {
-  loaded$ = this.store.pipe(select(liveChatQuery.getLoaded));
+  connected$ = this.store.pipe(select(liveChatQuery.getConnected));
 
   messages$ = this.store.pipe(select(liveChatQuery.getMessages));
   unsendedMessages$ = this.store.pipe(
@@ -30,25 +20,11 @@ export class LiveChatFacade {
 
   constructor(private store: Store<LiveChatPartialState>) {}
 
-  connect(iUserId: IUserId, destinationId: IUserId) {
-    this.store.dispatch(new ConnectLiveChat(iUserId, destinationId));
+  connect(userId: UserId, destinationId: UserId) {
+    this.store.dispatch(new ConnectLiveChat(userId, destinationId));
   }
 
-  sendMessage(destinationUser: IUserId, message: String150) {
-    this.store.dispatch(
-      new SendMessage({
-        id: UnsendedMessageId.create(),
-        destination: destinationUser,
-        description: message
-      })
-    );
-  }
-
-  deleteMessage(message: UnsendedMessage) {}
-
-  resendMessage(message: UnsendedMessage) {}
-
-  loadAll() {
-    this.store.dispatch(new LoadLiveChat());
+  sendMessage(message: String150) {
+    this.store.dispatch(new PrepareToSendMessage(message));
   }
 }

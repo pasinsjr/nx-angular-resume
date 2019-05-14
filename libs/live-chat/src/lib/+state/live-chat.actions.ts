@@ -1,10 +1,10 @@
 import { Action } from '@ngrx/store';
 import { Message, UnsendedMessage } from '../live-chat.public-classes';
-import { IUserId, IUser } from '@nx-angular-resume/auth';
-
+import { UserId } from '@nx-angular-resume/user';
+import { String150 } from '@nx-angular-resume/common-classes';
 export enum LiveChatActionTypes {
-  LoadLiveChat = '[LiveChat] Load LiveChat',
   ConnectLiveChat = '[LiveChat] Connect LiveChat',
+  PrepareToSendMessage = '[LiveChat] Prepare To Send Message',
   SendMessage = '[LiveChat] Send Message',
   AlreadySendMessage = '[LiveChat] Already Send Message',
   ResendMessage = '[LiveChat] Resend Message',
@@ -14,19 +14,19 @@ export enum LiveChatActionTypes {
   NotFoundCollectionsError = '[LiveChat] Not found collections error',
   LiveChatConnectError = '[LiveChat] LiveChat Load Error'
 }
-
-export class LoadLiveChat implements Action {
-  readonly type = LiveChatActionTypes.LoadLiveChat;
-}
-
 export class ConnectLiveChat implements Action {
   readonly type = LiveChatActionTypes.ConnectLiveChat;
-  constructor(public userId: IUserId, public destinationId: IUserId) {}
+  constructor(public userId: UserId, public destinationId: UserId) {}
 }
 
 export class UpdateMessages implements Action {
   readonly type = LiveChatActionTypes.UpdateMessages;
   constructor(public messages: Message[]) {}
+}
+
+export class PrepareToSendMessage implements Action {
+  readonly type = LiveChatActionTypes.PrepareToSendMessage;
+  constructor(public message: String150) {}
 }
 
 export class SendMessage implements Action {
@@ -65,8 +65,8 @@ export class LiveChatLoaded implements Action {
 }
 
 export type LiveChatAction =
-  | LoadLiveChat
   | ConnectLiveChat
+  | PrepareToSendMessage
   | SendMessage
   | ResendMessage
   | AlreadySendMessage
@@ -82,8 +82,8 @@ export type LiveChateError =
   | SendMessageError;
 
 export const fromLiveChatActions = {
-  LoadLiveChat,
   ConnectLiveChat,
+  PrepareToSendMessage,
   SendMessage,
   AlreadySendMessage,
   UpdateMessages,

@@ -1,6 +1,6 @@
 import { String150 } from '@nx-angular-resume/common-classes';
 import { UUID } from 'angular2-uuid';
-import { IUserId } from '@nx-angular-resume/auth';
+import { UserId } from '@nx-angular-resume/user';
 
 export class UnsendedMessageId {
   private constructor(public value: string) {}
@@ -12,12 +12,12 @@ export class UnsendedMessageId {
 
 export interface Message {
   timeStamp: Date;
-  destination: IUserId;
+  destination: UserId;
   description: String150;
 }
 
 export interface UnsendedMessage {
   id: UnsendedMessageId;
-  destination: IUserId;
+  destination: UserId;
   description: String150;
 }

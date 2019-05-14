@@ -1,7 +1,6 @@
 import { LiveChatAction, LiveChatActionTypes } from './live-chat.actions';
-import { String150 } from '@nx-angular-resume/common-classes';
 import { UnsendedMessage, Message } from '../live-chat.public-classes';
-import { IUserId } from '@nx-angular-resume/auth';
+import { UserId } from '@nx-angular-resume/user';
 
 export const LIVECHAT_FEATURE_KEY = 'liveChat';
 
@@ -17,9 +16,10 @@ export interface LiveChatState {
   messages: Message[];
   unsendedMessages: UnsendedMessage[];
   errorMessages: UnsendedMessage[];
-  userId: IUserId;
-  destinationId: IUserId;
-  loaded: boolean;
+  userId: UserId;
+  requestToMessageUsers: UserId[];
+  destinationId: UserId;
+  connected: boolean;
   error?: any;
 }
 
@@ -31,9 +31,10 @@ export const initialState: LiveChatState = {
   messages: [],
   unsendedMessages: [],
   errorMessages: [],
+  requestToMessageUsers: [],
   userId: null,
   destinationId: null,
-  loaded: false
+  connected: false
 };
 
 export function liveChatReducer(
@@ -44,6 +45,7 @@ export function liveChatReducer(
     case LiveChatActionTypes.ConnectLiveChat: {
       state = {
         ...state,
+        connected: false,
         userId: action.userId,
         destinationId: action.destinationId
       };
@@ -52,11 +54,22 @@ export function liveChatReducer(
     case LiveChatActionTypes.UpdateMessages: {
       state = {
         ...state,
+        connected: true,
         messages: action.messages
       };
       break;
     }
-
+    case LiveChatActionTypes.AlreadySendMessage: {
+      state = {
+        ...state,
+        unsendedMessages: [
+          ...state.unsendedMessages.filter(
+            message => message.id.value !== action.message.id.value
+          )
+        ]
+      };
+      break;
+    }
     case LiveChatActionTypes.SendMessage: {
       state = {
         ...state,
@@ -73,6 +86,7 @@ export function liveChatReducer(
         ),
         errorMessages: [...state.errorMessages, action.message]
       };
+      break;
     }
 
     case LiveChatActionTypes.ResendMessage: {

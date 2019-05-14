@@ -14,13 +14,16 @@ import {
   SendMessage,
   SendMessageError,
   AlreadySendMessage,
-  UpdateMessages
+  UpdateMessages,
+  PrepareToSendMessage
 } from './live-chat.actions';
 
-import { AuthFacade, IUserId } from '@nx-angular-resume/auth';
 import { map } from 'rxjs/operators';
 import { LiveChatService } from '../live-chat.service';
-
+import {
+  UnsendedMessage,
+  UnsendedMessageId
+} from '../live-chat.public-classes';
 @Injectable()
 export class LiveChatEffects {
   @Effect() connectToStream$ = this.dataPersistence.fetch(
@@ -37,7 +40,7 @@ export class LiveChatEffects {
     }
   );
 
-  @Effect() createNewCollections = this.dataPersistence.pessimisticUpdate(
+  @Effect() createNewCollections$ = this.dataPersistence.pessimisticUpdate(
     LiveChatActionTypes.NotFoundCollectionsError,
     {
       run: (action: NotFoundCollectionsError, state: LiveChatPartialState) => {
@@ -64,7 +67,25 @@ export class LiveChatEffects {
     }
   );
 
-  @Effect() SendMessage$ = this.dataPersistence.optimisticUpdate(
+  @Effect() prepareToSendMessage$ = this.dataPersistence.optimisticUpdate(
+    LiveChatActionTypes.PrepareToSendMessage,
+    {
+      run: (action: PrepareToSendMessage, state: LiveChatPartialState) => {
+        return new SendMessage({
+          id: UnsendedMessageId.create(),
+          description: action.message,
+          destination: state[LIVECHAT_FEATURE_KEY].destinationId
+        } as UnsendedMessage);
+      },
+
+      undoAction: (action: PrepareToSendMessage, error) => {
+        console.error('Error', error);
+        return new SendMessageError(error);
+      }
+    }
+  );
+
+  @Effect() sendMessage$ = this.dataPersistence.optimisticUpdate(
     LiveChatActionTypes.SendMessage,
     {
       run: (action: SendMessage, state: LiveChatPartialState) => {
@@ -78,7 +99,6 @@ export class LiveChatEffects {
       },
       undoAction: (action: SendMessage, error) => {
         console.error('Error', error);
-        console.dir(error);
         if (error.code === 'permission-denied')
           return new NotFoundCollectionsError(action.message);
         return new SendMessageError(action.message);
@@ -89,7 +109,6 @@ export class LiveChatEffects {
   constructor(
     private actions$: Actions,
     private livechatService: LiveChatService,
-    private authFacade: AuthFacade,
     private dataPersistence: DataPersistence<LiveChatPartialState>
   ) {}
 }

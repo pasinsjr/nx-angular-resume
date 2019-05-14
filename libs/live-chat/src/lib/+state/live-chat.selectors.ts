@@ -6,9 +6,9 @@ const getLiveChatState = createFeatureSelector<LiveChatState>(
   LIVECHAT_FEATURE_KEY
 );
 
-const getLoaded = createSelector(
+const getConnected = createSelector(
   getLiveChatState,
-  (state: LiveChatState) => state.loaded
+  (state: LiveChatState) => state.connected
 );
 const getError = createSelector(
   getLiveChatState,
@@ -31,7 +31,7 @@ const getErorrMessages = createSelector(
 );
 
 export const liveChatQuery = {
-  getLoaded,
+  getConnected,
   getError,
   getMessages,
   getUnsendedMessages,
