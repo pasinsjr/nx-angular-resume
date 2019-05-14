@@ -39,12 +39,10 @@
           },
           "configurations": {
             "production": {
-              "fileReplacements": [
-                {
-                  "replace": "apps/nx-angular-resume/src/environments/environment.ts",
-                  "with": "apps/nx-angular-resume/src/environments/environment.prod.ts"
-                }
-              ],
+              "fileReplacements": [{
+                "replace": "apps/nx-angular-resume/src/environments/environment.ts",
+                "with": "apps/nx-angular-resume/src/environments/environment.prod.ts"
+              }],
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
@@ -54,13 +52,11 @@
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
-              "budgets": [
-                {
-                  "type": "initial",
-                  "maximumWarning": "2mb",
-                  "maximumError": "5mb"
-                }
-              ],
+              "budgets": [{
+                "type": "initial",
+                "maximumWarning": "2mb",
+                "maximumError": "5mb"
+              }],
               "serviceWorker": true,
               "ngswConfigPath": "apps/nx-angular-resume/ngsw-config.json"
             }
@@ -244,37 +240,6 @@
           "options": {
             "jestConfig": "libs/common-classes/jest.config.js",
             "tsConfig": "libs/common-classes/tsconfig.spec.json"
-          }
-        }
-      },
-      "schematics": {
-        "@nrwl/schematics:component": {
-          "styleext": "scss"
-        }
-      }
-    },
-    "resume-profile": {
-      "root": "libs/resume/profile",
-      "sourceRoot": "libs/resume/profile/src",
-      "projectType": "library",
-      "prefix": "nx-angular-resume",
-      "architect": {
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "libs/resume/profile/tsconfig.lib.json",
-              "libs/resume/profile/tsconfig.spec.json"
-            ],
-            "exclude": ["**/node_modules/**"]
-          }
-        },
-        "test": {
-          "builder": "@nrwl/builders:jest",
-          "options": {
-            "jestConfig": "libs/resume/profile/jest.config.js",
-            "tsConfig": "libs/resume/profile/tsconfig.spec.json",
-            "setupFile": "libs/resume/profile/src/test-setup.ts"
           }
         }
       },
