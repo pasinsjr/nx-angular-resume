@@ -1,11 +1,14 @@
 <div class="live-chat-container">
   <div class="chat-header">
     <div class="user-image" [style.background-image]="'url('+ destinationUser?.photoURL?.value+ ')'"></div>
-    <div *ngIf="anonymousMode" class="link-anonymous" (click)="emitLinkAccount()">
-      Link session with google account for using in another device.
+    <div class="contact-name">
+      {{destinationUser.name}}
     </div>
   </div>
   <div class="chat-box" #chatBox>
+    <div *ngIf="anonymousMode" class="link-anonymous" (click)="emitLinkAccount()">
+      Link session with google account for using in another device.
+    </div>
     <div class="message-box" *ngFor="let message of _messages">
       <div class="message" [class.my-message]="message.destination?.value !== user?.uid?.value">
         {{ message.description.value }}

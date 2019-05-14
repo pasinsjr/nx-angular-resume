@@ -8,9 +8,13 @@ import {
   String150
 } from '@nx-angular-resume/common-classes';
 import { Observable, Subject } from 'rxjs';
-import { IUser, AuthFacade, IUserId } from '@nx-angular-resume/auth';
-import { UserFacade } from '@nx-angular-resume/user';
-import { LiveChatFacade, Message } from '@nx-angular-resume/live-chat';
+import { AuthFacade } from '@nx-angular-resume/auth';
+import { UserFacade, User, UserId } from '@nx-angular-resume/user';
+import {
+  LiveChatFacade,
+  Message,
+  UnsendedMessage
+} from '@nx-angular-resume/live-chat';
 import { filter, takeUntil, map } from 'rxjs/operators';
 
 interface TimelineElement {
@@ -32,10 +36,13 @@ interface CardElement {
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit, OnDestroy {
-  user$: Observable<IUser>;
-  destinationChatUser$: Observable<IUser>;
+  user$: Observable<User>;
+  destinationChatUser$: Observable<User>;
   message$: Observable<Message[]>;
+  unsendedMessages$: Observable<UnsendedMessage[]>;
   annonymousMode$: Observable<boolean>;
+  liveChatConnected$: Observable<boolean>;
+  usersList$: Observable<User[]>;
 
   mockProfessionnalData: TimelineElement[] = [
     {
@@ -122,17 +129,20 @@ export class DashboardComponent implements OnInit, OnDestroy {
     {
       title: String20.create('Firebase'),
       imgSrc: StringPath.create('/assets/images/firebase-logo.png'),
-      description: ''
+      description:
+        'Experience with Firestore rule, Collection and documents designing'
     },
     {
       title: String20.create('Node.js'),
       imgSrc: StringPath.create('/assets/images/node-js-logo.png'),
-      description: ''
+      description:
+        'Using Express framework for HTTP methods handling, Almost of the codes are writing in promises style.'
     },
     {
       title: String20.create('Mongo'),
       imgSrc: StringPath.create('/assets/images/mongodb-logo.png'),
-      description: ''
+      description:
+        'Using Mongoose (Object modeling tools for mongo), experince with aggregate query'
     }
   ];
 
@@ -147,25 +157,32 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.authFacade.loadAuth();
-    this.user$ = this.authFacade.user$;
+    this.userFacade.loadAll();
+    this.liveChatConnected$ = this.livechatFacade.connected$;
+    this.message$ = this.livechatFacade.messages$;
+    this.unsendedMessages$ = this.livechatFacade.unsendedMessages$;
+    this.user$ = this.authFacade.user$.pipe(
+      filter(user => (user ? true : false)),
+      map(
+        user =>
+          ({
+            uid: UserId.create(user.uid.value),
+            name: user.name,
+            photoURL: user.photoURL
+          } as User)
+      )
+    );
     this.annonymousMode$ = this.authFacade.isAnnonymous$;
 
-    this.user$
-      .pipe(
-        filter(user => (user ? true : false)),
-        takeUntil(this.unsubscribe)
-      )
-      .subscribe(user => {
-        this.livechatFacade.connect(
+    this.user$.pipe(takeUntil(this.unsubscribe)).subscribe(user => {
+      this.userFacade.updateUser(user);
+      if (user.uid.value !== this.env.profileId)
+        return this.connectLiveChatUser(
           user.uid,
-          IUserId.create(this.env.profileId)
+          UserId.create(this.env.profileId)
         );
-        this.destinationChatUser$ = this.userFacade.getSelectedUser(
-          this.env.profileId
-        );
-        this.userFacade.updateUser(user);
-        this.message$ = this.livechatFacade.messages$;
-      });
+      this.usersList$ = this.userFacade.allUser$;
+    });
   }
 
   ngOnDestroy() {
@@ -174,9 +191,13 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   sendMessage(message: String150): void {
-    this.livechatFacade.sendMessage(
-      IUserId.create(this.env.profileId),
-      message
+    this.livechatFacade.sendMessage(message);
+  }
+
+  connectLiveChatUser(myId: UserId, destinationId: UserId): void {
+    this.livechatFacade.connect(myId, destinationId);
+    this.destinationChatUser$ = this.userFacade.getSelectedUser(
+      destinationId.value
     );
   }
 

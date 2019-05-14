@@ -11,12 +11,12 @@ import {
 } from '@angular/core';
 import { String150 } from '@nx-angular-resume/common-classes';
 
-import { IUser, IUserId } from '@nx-angular-resume/auth';
+import { User, UserId } from '@nx-angular-resume/user';
 
 interface Message {
   timeStamp: Date;
   description: String150;
-  destination: IUserId;
+  destination: UserId;
 }
 @Component({
   selector: 'nx-angular-resume-live-chat',
@@ -33,8 +33,8 @@ export class LiveChatComponent implements OnInit, AfterViewChecked {
 
   @Input() anonymousMode: boolean;
 
-  @Input() user: IUser;
-  @Input() destinationUser: IUser;
+  @Input() user: User;
+  @Input() destinationUser: User;
 
   @Output() sendMessage: EventEmitter<String150> = new EventEmitter();
   @Output() linkAccount: EventEmitter<void> = new EventEmitter();

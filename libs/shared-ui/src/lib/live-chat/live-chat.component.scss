@@ -27,15 +27,30 @@
     border-bottom: 2px solid $primary-color;
     padding: 5px;
 
-    .link-anonymous {
-      cursor: pointer;
+    .contact-name {
+      padding-left: 50px;
+      line-height: 40px;
+      font-weight: bold;
     }
+
+  }
+
+  .link-anonymous {
+    cursor: pointer;
+    position: absolute;
+    background: beige;
+    top: 50px;
+    color: $primary-color;
+    padding: 2px 5px;
+    box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.25);
   }
 
   .chat-box {
     height: calc(100% - 100px);
     width: 100%;
     overflow-y: scroll;
+    display: flex;
+    flex-direction: column-reverse;
     background: white;
 
     .message-box {
@@ -46,6 +61,8 @@
         background: $second-color;
         padding: 1rem;
         margin-bottom: 2px;
+        max-width: calc(100% - 2rem);
+        overflow-x: hidden;
 
         &.my-message {
           float: right;
