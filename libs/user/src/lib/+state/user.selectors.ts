@@ -17,12 +17,20 @@ const getAllUser = createSelector(
   getUserState,
   getLoaded,
   (state: UserState, isLoaded) => {
+    return isLoaded ? state.allUsers : [];
+  }
+);
+
+const getAlluserObjects = createSelector(
+  getUserState,
+  getLoaded,
+  (state: UserState, isLoaded) => {
     return isLoaded ? state.users : {};
   }
 );
 const selectUser = id =>
   createSelector(
-    getAllUser,
+    getAlluserObjects,
     users => {
       const result = users[id];
       return result ? Object.assign({}, result) : undefined;

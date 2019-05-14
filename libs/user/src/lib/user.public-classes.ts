@@ -11,8 +11,6 @@ export class UserId {
 export interface User {
   uid: UserId;
   name: string;
-  loading?: boolean;
-  error?: string;
   photoURL?: StringURL | StringPath;
 }
 

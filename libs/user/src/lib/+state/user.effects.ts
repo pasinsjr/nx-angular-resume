@@ -21,7 +21,18 @@ export class UserEffects {
     run: (action: LoadUser, state: UserPartialState) => {
       return this.userService
         .connectUserStorage()
-        .pipe(map(users => new UserLoaded(users)));
+        .pipe(
+          map(
+            users =>
+              new UserLoaded(
+                users,
+                users.reduce(
+                  (acc, cur) => ({ ...acc, [cur.uid.value]: cur }),
+                  {}
+                )
+              )
+          )
+        );
     },
 
     onError: (action: LoadUser, error) => {

@@ -1,5 +1,4 @@
 import { Action } from '@ngrx/store';
-import { IUser } from '@nx-angular-resume/auth';
 import { User } from '../user.public-classes';
 export enum UserActionTypes {
   LoadUser = '[User] Load User',
@@ -21,7 +20,10 @@ export class UserLoadError implements Action {
 
 export class UserLoaded implements Action {
   readonly type = UserActionTypes.UserLoaded;
-  constructor(public users: { [key: string]: IUser }) {}
+  constructor(
+    public allusers: User[],
+    public usersObject: { [key: string]: User }
+  ) {}
 }
 
 export class UpdateUser implements Action {

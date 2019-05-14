@@ -1,5 +1,5 @@
 import { UserAction, UserActionTypes } from './user.actions';
-import { IUser } from '@nx-angular-resume/auth';
+import { User } from '../user.public-classes';
 
 export const USER_FEATURE_KEY = 'user';
 
@@ -14,7 +14,8 @@ export const USER_FEATURE_KEY = 'user';
 /* tslint:disable:no-empty-interface */
 
 export interface UserState {
-  users: { [key: string]: IUser }; // list of User; analogous to a sql normalized table
+  users: { [key: string]: User };
+  allUsers: User[];
   loaded: boolean; // has the User list been loaded
   error?: any; // last none error (if any)
 }
@@ -25,6 +26,7 @@ export interface UserPartialState {
 
 export const initialState: UserState = {
   users: {},
+  allUsers: [],
   loaded: false
 };
 
@@ -36,7 +38,8 @@ export function userReducer(
     case UserActionTypes.UserLoaded: {
       state = {
         ...state,
-        users: action.users,
+        allUsers: action.allusers,
+        users: action.usersObject,
         loaded: true
       };
       break;
