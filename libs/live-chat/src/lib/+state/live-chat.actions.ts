@@ -2,6 +2,7 @@ import { Action } from '@ngrx/store';
 import { Message, UnsendedMessage } from '../live-chat.public-classes';
 import { UserId } from '@nx-angular-resume/user';
 import { String150 } from '@nx-angular-resume/common-classes';
+import { Observable } from 'rxjs';
 export enum LiveChatActionTypes {
   ConnectLiveChat = '[LiveChat] Connect LiveChat',
   PrepareToSendMessage = '[LiveChat] Prepare To Send Message',
@@ -21,7 +22,7 @@ export class ConnectLiveChat implements Action {
 
 export class UpdateMessages implements Action {
   readonly type = LiveChatActionTypes.UpdateMessages;
-  constructor(public messages: Message[]) {}
+  constructor(public messages: Observable<Message[]>) {}
 }
 
 export class PrepareToSendMessage implements Action {

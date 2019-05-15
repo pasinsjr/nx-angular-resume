@@ -1,6 +1,7 @@
 import { LiveChatAction, LiveChatActionTypes } from './live-chat.actions';
 import { UnsendedMessage, Message } from '../live-chat.public-classes';
 import { UserId } from '@nx-angular-resume/user';
+import { Observable, of } from 'rxjs';
 
 export const LIVECHAT_FEATURE_KEY = 'liveChat';
 
@@ -13,7 +14,7 @@ export const LIVECHAT_FEATURE_KEY = 'liveChat';
  */
 
 export interface LiveChatState {
-  messages: Message[];
+  messages: Observable<Message[]>;
   unsendedMessages: UnsendedMessage[];
   errorMessages: UnsendedMessage[];
   userId: UserId;
@@ -28,7 +29,7 @@ export interface LiveChatPartialState {
 }
 
 export const initialState: LiveChatState = {
-  messages: [],
+  messages: null,
   unsendedMessages: [],
   errorMessages: [],
   requestToMessageUsers: [],

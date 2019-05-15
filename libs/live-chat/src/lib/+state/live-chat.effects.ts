@@ -18,7 +18,7 @@ import {
   PrepareToSendMessage
 } from './live-chat.actions';
 
-import { map } from 'rxjs/operators';
+import { map, take } from 'rxjs/operators';
 import { LiveChatService } from '../live-chat.service';
 import {
   UnsendedMessage,
@@ -30,9 +30,12 @@ export class LiveChatEffects {
     LiveChatActionTypes.ConnectLiveChat,
     {
       run: (action: ConnectLiveChat, state: LiveChatPartialState) => {
-        return this.livechatService
-          .connnetToStream(action.userId, action.destinationId)
-          .pipe(map(messages => new UpdateMessages(messages)));
+        return new UpdateMessages(
+          this.livechatService.connnetToStream(
+            action.userId,
+            action.destinationId
+          )
+        );
       },
       onError: (action: ConnectLiveChat, error) => {
         return new LiveChatConnectError(error);
