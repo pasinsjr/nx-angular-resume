@@ -12,11 +12,15 @@
       margin-bottom: 0px;
     }
   }
+
+  .live-chat {
+    z-index: 200;
+  }
 }
 
 .users-list {
   position: fixed;
-  right: 0px;
+  left: 0px;
   top: 0px;
   max-width: 200px;
   max-height: 150px;

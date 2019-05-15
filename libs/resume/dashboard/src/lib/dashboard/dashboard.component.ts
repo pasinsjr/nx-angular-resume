@@ -159,8 +159,12 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.authFacade.loadAuth();
     this.userFacade.loadAll();
     this.liveChatConnected$ = this.livechatFacade.connected$;
-    this.message$ = this.livechatFacade.messages$;
     this.unsendedMessages$ = this.livechatFacade.unsendedMessages$;
+    this.livechatFacade.messages$
+      .pipe(takeUntil(this.unsubscribe))
+      .subscribe(message$ => {
+        this.message$ = message$;
+      });
     this.user$ = this.authFacade.user$.pipe(
       filter(user => (user ? true : false)),
       map(
@@ -172,6 +176,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
           } as User)
       )
     );
+
     this.annonymousMode$ = this.authFacade.isAnnonymous$;
 
     this.user$.pipe(takeUntil(this.unsubscribe)).subscribe(user => {
