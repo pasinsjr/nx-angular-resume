@@ -47,6 +47,8 @@ export class LiveChatComponent implements OnInit, AfterViewChecked {
   _messages: Message[];
   testInput: string;
 
+  activeMobileLiveChat: boolean;
+
   constructor() {}
 
   ngOnInit() {}

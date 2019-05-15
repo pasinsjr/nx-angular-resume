@@ -10,6 +10,58 @@
   overflow: hidden;
 }
 
+.live-chat-button {
+  position: fixed;
+  z-index: 200;
+  right: 5px;
+  bottom: 5px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: $primary-color;
+  box-shadow: $global-box-shadow;
+  border: 1px solid $second-color;
+
+  .live-chat-logo {
+    width: 30px;
+    height: 25px;
+    display: flex;
+    padding: 3px;
+    margin: auto;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    border-radius: 3px;
+    background: white;
+
+    &::after {
+      content: '';
+      border-left: 5px solid transparent;
+      border-right: 5px solid transparent;
+      border-top: 5px solid white;
+      position: absolute;
+      right: 7px;
+      bottom: -5px;
+    }
+
+    .dot {
+      width: 100%;
+      border-radius: 50%;
+      height: 4px;
+      margin: 2px;
+      background: $primary-color;
+    }
+  }
+
+  @media screen and (min-width: 900px) {
+    display: none;
+  }
+}
+
 
 .live-chat-container {
   width: 300px;
@@ -18,7 +70,38 @@
   right: 1rem;
   bottom: 0px;
   border: 2px solid $primary-color;
+  z-index: 200;
 
+  .close-element {
+    display: none;
+  }
+
+  @media screen and (max-width: 900px) {
+    display: none;
+
+    .close-element {
+      display: inherit;
+      position: absolute;
+      height: 30px;
+      width: 30px;
+      line-height: 30px;
+      right: -10px;
+      top: -10px;
+      color: $primary-color;
+      background: white;
+      padding: 3px;
+      border-radius: 50%;
+      border: 2px solid $primary-color;
+
+      svg {
+        fill: $primary-color
+      }
+    }
+
+    &.active {
+      display: inherit;
+    }
+  }
 
   .chat-header {
     height: 50px;
