@@ -18,7 +18,6 @@ export interface LiveChatState {
   unsendedMessages: UnsendedMessage[];
   errorMessages: UnsendedMessage[];
   userId: UserId;
-  requestToMessageUsers: UserId[];
   destinationId: UserId;
   connected: boolean;
   error?: any;
@@ -32,7 +31,6 @@ export const initialState: LiveChatState = {
   messages: null,
   unsendedMessages: [],
   errorMessages: [],
-  requestToMessageUsers: [],
   userId: null,
   destinationId: null,
   connected: false
