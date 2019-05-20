@@ -10,9 +10,9 @@ import { NxModule } from '@nrwl/nx';
 import { AuthEffects } from './auth.effects';
 import { AuthFacade } from './auth.facade';
 
-import { authQuery } from './auth.selectors';
-import { LoadAuth, AuthLoaded } from './auth.actions';
-import { AuthState, Entity, initialState, authReducer } from './auth.reducer';
+import { AuthState, initialState, authReducer } from './auth.reducer';
+import { of } from 'rxjs';
+import { AngularFireAuth } from '@angular/fire/auth';
 
 interface TestSchema {
   auth: AuthState;
@@ -21,14 +21,18 @@ interface TestSchema {
 describe('AuthFacade', () => {
   let facade: AuthFacade;
   let store: Store<TestSchema>;
-  let createAuth;
+  const mockAnonymousUser = {
+    uid: 'AAAAAA',
+    isAnonymous: true
+  };
 
-  beforeEach(() => {
-    createAuth = (id: string, name = ''): Entity => ({
-      id,
-      name: name || `name-${id}`
-    });
-  });
+  let mockAngularFireAuth = {
+    authState: of(mockAnonymousUser),
+    auth: {
+      signInAnonymously: jest.fn(),
+      signInWithPopup: jest.fn()
+    }
+  };
 
   describe('used in NgModule', () => {
     beforeEach(() => {
@@ -37,7 +41,13 @@ describe('AuthFacade', () => {
           StoreModule.forFeature('auth', authReducer, { initialState }),
           EffectsModule.forFeature([AuthEffects])
         ],
-        providers: [AuthFacade]
+        providers: [
+          AuthFacade,
+          {
+            provide: AngularFireAuth,
+            useValue: mockAngularFireAuth
+          }
+        ]
       })
       class CustomFeatureModule {}
 
@@ -59,46 +69,21 @@ describe('AuthFacade', () => {
     /**
      * The initially generated facade::loadAll() returns empty array
      */
-    it('loadAll() should return empty list with loaded == true', async done => {
+    it('loadAuth() should return user with annonymous == true', async done => {
       try {
-        let list = await readFirst(facade.allAuth$);
-        let isLoaded = await readFirst(facade.loaded$);
+        let user = await readFirst(facade.user$);
+        let isAnnonymous = await readFirst(facade.isAnnonymous$);
 
-        expect(list.length).toBe(0);
-        expect(isLoaded).toBe(false);
+        expect(user).toBe(null);
+        expect(isAnnonymous).toBe(false);
 
-        facade.loadAll();
+        facade.loadAuth();
 
-        list = await readFirst(facade.allAuth$);
-        isLoaded = await readFirst(facade.loaded$);
+        user = await readFirst(facade.user$);
+        isAnnonymous = await readFirst(facade.isAnnonymous$);
 
-        expect(list.length).toBe(0);
-        expect(isLoaded).toBe(true);
-
-        done();
-      } catch (err) {
-        done.fail(err);
-      }
-    });
-
-    /**
-     * Use `AuthLoaded` to manually submit list for state management
-     */
-    it('allAuth$ should return the loaded list; and loaded flag == true', async done => {
-      try {
-        let list = await readFirst(facade.allAuth$);
-        let isLoaded = await readFirst(facade.loaded$);
-
-        expect(list.length).toBe(0);
-        expect(isLoaded).toBe(false);
-
-        store.dispatch(new AuthLoaded([createAuth('AAA'), createAuth('BBB')]));
-
-        list = await readFirst(facade.allAuth$);
-        isLoaded = await readFirst(facade.loaded$);
-
-        expect(list.length).toBe(2);
-        expect(isLoaded).toBe(true);
+        expect(user.uid.value).toBe('AAAAAA');
+        expect(isAnnonymous).toBe(true);
 
         done();
       } catch (err) {
