@@ -32,7 +32,7 @@ const commonToMessageAdapter = (messages: CommonTypeMessage[]) =>
 export class LiveChatService {
   constructor(private afs: AngularFirestore) {}
 
-  connnetToStream(
+  connectToStream(
     userId: UserId,
     destinationId: UserId
   ): Observable<Message[]> {
@@ -44,6 +44,7 @@ export class LiveChatService {
         )
         .valueChanges()
         .pipe(map(commonToMessageAdapter)),
+
       this.afs
         .collection<CommonTypeMessage>(
           `messages/${destinationId.value}/${userId.value}`,

@@ -31,7 +31,7 @@ export class LiveChatEffects {
     {
       run: (action: ConnectLiveChat, state: LiveChatPartialState) => {
         return new UpdateMessages(
-          this.livechatService.connnetToStream(
+          this.livechatService.connectToStream(
             action.userId,
             action.destinationId
           )
