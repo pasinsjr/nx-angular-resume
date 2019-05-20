@@ -19,18 +19,5 @@
       <nx-angular-resume-card-slider [cards]="mockTechStack"></nx-angular-resume-card-slider>
     </div>
   </div>
-  <div *ngIf="user$ | async as myUser">
-    <div class="users-list" *ngIf="usersList$ | async as users">
-      <div class="user" *ngFor="let user of users" (click)="connectLiveChatUser(myUser.uid, user.uid)"
-        [style.background-image]="'url(' + user.photoURL.value + ')'">
-
-      </div>
-    </div>
-  </div>
-  <div class="live-chat" *ngIf="liveChatConnected$ | async">
-    <nx-angular-resume-live-chat [messages]="message$ | async" [user]="user$ | async"
-      [destinationUser]="destinationChatUser$ | async" [anonymousMode]="annonymousMode$ | async"
-      (linkAccount)="googleSingIn()" (sendMessage)="sendMessage($event)">
-    </nx-angular-resume-live-chat>
-  </div>
+  <nx-angular-resume-live-chat-container></nx-angular-resume-live-chat-container>
 </div>

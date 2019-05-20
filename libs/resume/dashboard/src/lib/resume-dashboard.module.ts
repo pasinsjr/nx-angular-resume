@@ -16,6 +16,9 @@ import { EffectsModule } from '@ngrx/effects';
 import { AngularFireModule } from '@angular/fire';
 import { UserModule } from '@nx-angular-resume/user';
 
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { LiveChatContainerComponent } from './live-chat-container/live-chat-container.component';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -30,6 +33,6 @@ import { UserModule } from '@nx-angular-resume/user';
     UserModule,
     LiveChatModule
   ],
-  declarations: [DashboardComponent]
+  declarations: [DashboardComponent, LiveChatContainerComponent]
 })
 export class ResumeDashboardModule {}
