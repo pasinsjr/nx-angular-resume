@@ -23,8 +23,6 @@ import {
   GoogleUser
 } from '../auth.public-classes';
 import { StringURL } from '@nx-angular-resume/common-classes';
-import { AngularFirestore } from '@angular/fire/firestore';
-
 @Injectable()
 export class AuthEffects {
   @Effect() loadAuth$ = this.dataPersistence.fetch(AuthActionTypes.LoadAuth, {
@@ -83,7 +81,6 @@ export class AuthEffects {
 
   constructor(
     private actions$: Actions,
-    private afs: AngularFirestore,
     private afAuth: AngularFireAuth,
     private dataPersistence: DataPersistence<AuthPartialState>
   ) {}
