@@ -31,7 +31,7 @@
     </div>
   </div>
   <div class="input">
-    <div class="user-image" [style.background-image]="'url('+ user.photoURL.value+ ')'"></div>
+    <div class="user-image" [style.background-image]="'url('+ user?.photoURL?.value+ ')'"></div>
     <input type="text" [(ngModel)]="testInput" (keydown.enter)="emitMessage()" />
   </div>
 </div>
