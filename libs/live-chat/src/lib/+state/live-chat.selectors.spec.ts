@@ -1,57 +1,56 @@
-import { Entity, LiveChatState } from './live-chat.reducer';
+import { LiveChatState } from './live-chat.reducer';
 import { liveChatQuery } from './live-chat.selectors';
+import { of } from 'rxjs';
+import { UserId } from '@nx-angular-resume/user';
+import { UnsendedMessage } from '../live-chat.public-classes';
 
 describe('LiveChat Selectors', () => {
   const ERROR_MSG = 'No Error Available';
-  const getLiveChatId = it => it['id'];
 
   let storeState;
 
+  const mockUserIdA = UserId.create('a');
+  const mockUserIdB = UserId.create('b');
+  const mockMessage$ = of([]);
+  const mockUnsendedMessages = [{} as UnsendedMessage];
+  const mockErrorMessages = [{} as UnsendedMessage];
+
   beforeEach(() => {
-    const createLiveChat = (id: string, name = ''): Entity => ({
-      id,
-      name: name || `name-${id}`
-    });
     storeState = {
       liveChat: {
-        list: [
-          createLiveChat('PRODUCT-AAA'),
-          createLiveChat('PRODUCT-BBB'),
-          createLiveChat('PRODUCT-CCC')
-        ],
-        selectedId: 'PRODUCT-BBB',
-        error: ERROR_MSG,
-        loaded: true
+        messages: mockMessage$,
+        unsendedMessages: mockUnsendedMessages,
+        errorMessages: mockErrorMessages,
+        userId: mockUserIdA,
+        destinationId: mockUserIdB,
+        connected: true
       }
     };
   });
 
   describe('LiveChat Selectors', () => {
-    it('getAllLiveChat() should return the list of LiveChat', () => {
-      const results = liveChatQuery.getAllLiveChat(storeState);
-      const selId = getLiveChatId(results[1]);
+    it('getConnected() should return true', () => {
+      const results = liveChatQuery.getConnected(storeState);
 
-      expect(results.length).toBe(3);
-      expect(selId).toBe('PRODUCT-BBB');
+      expect(results).toBe(true);
     });
 
-    it('getSelectedLiveChat() should return the selected Entity', () => {
-      const result = liveChatQuery.getSelectedLiveChat(storeState);
-      const selId = getLiveChatId(result);
+    it('getMessages() should return current observable of message', () => {
+      const result = liveChatQuery.getMessages(storeState);
 
-      expect(selId).toBe('PRODUCT-BBB');
+      expect(result).toBe(mockMessage$);
     });
 
-    it("getLoaded() should return the current 'loaded' status", () => {
-      const result = liveChatQuery.getLoaded(storeState);
+    it('getUnsendMessages() should return the current unsend message list', () => {
+      const result = liveChatQuery.getUnsendedMessages(storeState);
 
-      expect(result).toBe(true);
+      expect(result).toBe(mockUnsendedMessages);
     });
 
-    it("getError() should return the current 'error' storeState", () => {
-      const result = liveChatQuery.getError(storeState);
+    it('getErrorMessages() should return the current error message list', () => {
+      const result = liveChatQuery.getErorrMessages(storeState);
 
-      expect(result).toBe(ERROR_MSG);
+      expect(result).toBe(mockErrorMessages);
     });
   });
 });

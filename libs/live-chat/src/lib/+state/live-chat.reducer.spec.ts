@@ -1,44 +1,67 @@
-import { LiveChatLoaded } from './live-chat.actions';
+import {
+  ConnectLiveChat,
+  UpdateMessages,
+  AlreadySendMessage
+} from './live-chat.actions';
 import {
   LiveChatState,
-  Entity,
   initialState,
   liveChatReducer
 } from './live-chat.reducer';
+import { UserId } from '@nx-angular-resume/user';
+import { of } from 'rxjs';
+import {
+  UnsendedMessage,
+  UnsendedMessageId
+} from '../live-chat.public-classes';
+import { String150 } from '@nx-angular-resume/common-classes';
 
 describe('LiveChat Reducer', () => {
-  const getLiveChatId = it => it['id'];
-  let createLiveChat;
+  let mockUserIdA: UserId;
+  let mockUserIdB: UserId;
 
   beforeEach(() => {
-    createLiveChat = (id: string, name = ''): Entity => ({
-      id,
-      name: name || `name-${id}`
-    });
+    mockUserIdA = UserId.create('a');
+    mockUserIdB = UserId.create('b');
   });
 
-  describe('valid LiveChat actions ', () => {
-    it('should return set the list of known LiveChat', () => {
-      const liveChats = [
-        createLiveChat('PRODUCT-AAA'),
-        createLiveChat('PRODUCT-zzz')
-      ];
-      const action = new LiveChatLoaded(liveChats);
+  describe('ConnectLiveChat action', () => {
+    it('should updating live chat connect state', () => {
+      const action = new ConnectLiveChat(mockUserIdA, mockUserIdB);
       const result: LiveChatState = liveChatReducer(initialState, action);
-      const selId: string = getLiveChatId(result.list[1]);
 
-      expect(result.loaded).toBe(true);
-      expect(result.list.length).toBe(2);
-      expect(selId).toBe('PRODUCT-zzz');
+      expect(result.userId).toBe(mockUserIdA);
+      expect(result.destinationId).toBe(mockUserIdB);
+      expect(result.connected).toBe(false);
     });
   });
 
-  describe('unknown action', () => {
-    it('should return the initial state', () => {
-      const action = {} as any;
+  describe('UpdateMessages action', () => {
+    it('should updating messages', () => {
+      const messages$ = of([]);
+      const action = new UpdateMessages(messages$);
       const result = liveChatReducer(initialState, action);
 
-      expect(result).toBe(initialState);
+      expect(result.messages).toBe(messages$);
+      expect(result.connected).toBe(true);
+    });
+  });
+
+  describe('AlreadySendMessage action', () => {
+    it('should updating unsend messages', () => {
+      const unsendMessage = {
+        id: UnsendedMessageId.create(),
+        destination: mockUserIdB,
+        description: String150.create('test')
+      } as UnsendedMessage;
+
+      const action = new AlreadySendMessage(unsendMessage);
+      const result = liveChatReducer(
+        { ...initialState, unsendedMessages: [unsendMessage] },
+        action
+      );
+
+      expect(result.unsendedMessages.length).toBe(0);
     });
   });
 });
