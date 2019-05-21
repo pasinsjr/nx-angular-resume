@@ -10,6 +10,17 @@ This project was created for showing Pasin style coding.
 
 ## Connecting to firebase
 
+```
+export const firebase = {
+    apiKey: '<your-key>',
+    authDomain: '<your-project-authdomain>',
+    databaseURL: '<your-database-URL>',
+    projectId: '<your-project-id>',
+    storageBucket: '<your-storage-bucket>',
+    messagingSenderId: '<your-messaging-sender-id>'
+};
+```
+
 Add firebase-env.ts file to folder environments in both root app project and resume/dashboard lib (Cause dashboard lib need to get value for initializing firebase module and I have no solutions for injecting environment to dashboard module but that can inject to components and services)
 
 ## Development server
