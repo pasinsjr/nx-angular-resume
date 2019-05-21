@@ -28,7 +28,8 @@
             "assets": [
               "apps/nx-angular-resume/src/favicon.ico",
               "apps/nx-angular-resume/src/assets",
-              "apps/nx-angular-resume/src/manifest.json"
+              "apps/nx-angular-resume/src/manifest.json",
+              "apps/nx-angular-resume/src/robots.txt"
             ],
             "styles": [
               "apps/nx-angular-resume/src/normalize.css",
