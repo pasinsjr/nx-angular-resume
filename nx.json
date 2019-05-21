@@ -14,10 +14,25 @@
     "nx-angular-resume-e2e": {
       "tags": []
     },
-    "resume-profile": {
+    "resume-dashboard": {
       "tags": []
     },
-    "resume-dashboard": {
+    "resume-ui": {
+      "tags": []
+    },
+    "shared-ui": {
+      "tags": []
+    },
+    "common-classes": {
+      "tags": []
+    },
+    "live-chat": {
+      "tags": []
+    },
+    "auth": {
+      "tags": []
+    },
+    "user": {
       "tags": []
     }
   }

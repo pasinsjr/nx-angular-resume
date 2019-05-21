@@ -1,0 +1,15 @@
+@import '_variables';
+
+.dashboard-section {
+  position: relative;
+
+  .dashboard-container {
+    margin: auto;
+    max-width: 900px;
+
+    h1 {
+      text-align: center;
+      margin-bottom: 0px;
+    }
+  }
+}

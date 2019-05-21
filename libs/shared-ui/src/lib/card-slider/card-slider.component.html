@@ -1,0 +1,14 @@
+<div class="card-container">
+  <div class="card-area">
+    <div class="card-element" *ngFor="let card of cards; let i = index" [style.top]="(i * 80) + 'px'"
+      [style.z-index]="200 - i" [style.left]="((i / (cards.length - 1)) * 100) + '%'" cdkDrag
+      (cdkDragStarted)="onDragStarted($event)" (cdkDragEnded)="onDragEnded($event)">
+      <p>{{card.description}}</p>
+      <div class="bottom-section">
+        <div class="card-image" [style.background-image]="'url(' + card.imgSrc.value + ')'">
+        </div>
+        <h2>{{card.title.value}}</h2>
+      </div>
+    </div>
+  </div>
+</div>

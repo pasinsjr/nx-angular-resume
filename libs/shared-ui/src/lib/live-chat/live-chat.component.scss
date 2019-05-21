@@ -1,0 +1,188 @@
+@import '_variables';
+
+.user-image {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-size: cover;
+  background-position: center center;
+  overflow: hidden;
+}
+
+.live-chat-button {
+  position: fixed;
+  z-index: 200;
+  right: 5px;
+  bottom: 5px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: $primary-color;
+  box-shadow: $global-box-shadow;
+  border: 1px solid $second-color;
+
+  .live-chat-logo {
+    width: 30px;
+    height: 25px;
+    display: flex;
+    padding: 3px;
+    margin: auto;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    border-radius: 3px;
+    background: white;
+
+    &::after {
+      content: '';
+      border-left: 5px solid transparent;
+      border-right: 5px solid transparent;
+      border-top: 5px solid white;
+      position: absolute;
+      right: 7px;
+      bottom: -5px;
+    }
+
+    .dot {
+      width: 100%;
+      border-radius: 50%;
+      height: 4px;
+      margin: 2px;
+      background: $primary-color;
+    }
+  }
+
+  @media screen and (min-width: 900px) {
+    display: none;
+  }
+}
+
+
+.live-chat-container {
+  width: 300px;
+  height: 350px;
+  position: fixed;
+  right: 1rem;
+  bottom: 0px;
+  border: 2px solid $primary-color;
+  z-index: 200;
+
+  .close-element {
+    display: none;
+  }
+
+  @media screen and (max-width: 900px) {
+    display: none;
+
+    .close-element {
+      display: inherit;
+      position: absolute;
+      height: 30px;
+      width: 30px;
+      line-height: 30px;
+      right: -10px;
+      top: -10px;
+      color: $primary-color;
+      background: white;
+      padding: 3px;
+      border-radius: 50%;
+      border: 2px solid $primary-color;
+
+      svg {
+        fill: $primary-color
+      }
+    }
+
+    &.active {
+      display: inherit;
+    }
+  }
+
+  .chat-header {
+    height: 50px;
+    width: 100%;
+    background: $second-color;
+    border-bottom: 2px solid $primary-color;
+    padding: 5px;
+
+    .contact-name {
+      padding-left: 50px;
+      line-height: 40px;
+      font-weight: bold;
+    }
+
+  }
+
+  .link-anonymous {
+    cursor: pointer;
+    position: absolute;
+    background: beige;
+    top: 50px;
+    color: $primary-color;
+    padding: 2px 5px;
+    box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.25);
+  }
+
+  .chat-box {
+    height: calc(100% - 100px);
+    width: 100%;
+    overflow-y: scroll;
+    display: flex;
+    flex-direction: column-reverse;
+    background: white;
+
+    .message-box {
+      clear: both;
+
+      .message {
+        float: left;
+        background: $second-color;
+        padding: 1rem;
+        margin-bottom: 2px;
+        max-width: calc(100% - 2rem);
+        overflow-x: hidden;
+
+        &.my-message {
+          float: right;
+          background: $primary-color;
+          color: white;
+        }
+      }
+    }
+  }
+
+  .input {
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
+    height: 50px;
+    padding-right: 40px;
+    border-top: 1px solid $primary-color;
+    background: white;
+
+    .user-image {
+      position: absolute;
+      right: 5px;
+      top: 5px;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-size: cover;
+      background-position: center center;
+      overflow: hidden;
+    }
+
+    input {
+      width: 100%;
+      height: 100%;
+      outline: none;
+      border: none;
+      padding: 1rem;
+    }
+  }
+}

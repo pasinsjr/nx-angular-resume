@@ -15,10 +15,15 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@nx-angular-resume/resume/profile": ["libs/resume/profile/src/index.ts"],
       "@nx-angular-resume/resume/dashboard": [
         "libs/resume/dashboard/src/index.ts"
-      ]
+      ],
+      "@nx-angular-resume/resume-ui": ["libs/resume-ui/src/index.ts"],
+      "@nx-angular-resume/shared-ui": ["libs/shared-ui/src/index.ts"],
+      "@nx-angular-resume/common-classes": ["libs/common-classes/src/index.ts"],
+      "@nx-angular-resume/live-chat": ["libs/live-chat/src/index.ts"],
+      "@nx-angular-resume/auth": ["libs/auth/src/index.ts"],
+      "@nx-angular-resume/user": ["libs/user/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

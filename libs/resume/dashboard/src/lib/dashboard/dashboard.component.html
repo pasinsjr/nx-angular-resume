@@ -1,3 +1,23 @@
 <div class="dashboard">
   <nx-angular-resume-profile></nx-angular-resume-profile>
+  <div class="dashboard-section">
+    <div class="dashboard-container">
+      <h1>Prefessional Experience</h1>
+      <nx-angular-resume-timeline [title]="'Professional'" [timeLineElements]="mockProfessionnalData">
+      </nx-angular-resume-timeline>
+    </div>
+  </div>
+  <div class="dashboard-section">
+    <div class="dashboard-container">
+      <h1>Intern Experience</h1>
+      <nx-angular-resume-timeline [title]="'Intern'" [timeLineElements]="mockInternData"></nx-angular-resume-timeline>
+    </div>
+  </div>
+  <div class="dashboard-section">
+    <div class="dashboard-container">
+      <h1>Tech Stack</h1>
+      <nx-angular-resume-card-slider [cards]="mockTechStack"></nx-angular-resume-card-slider>
+    </div>
+  </div>
+  <nx-angular-resume-live-chat-container></nx-angular-resume-live-chat-container>
 </div>
