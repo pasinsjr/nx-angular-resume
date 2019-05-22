@@ -119,7 +119,7 @@ export class DashboardComponent implements OnInit {
       title: String20.create('Node.js'),
       imgSrc: StringPath.create('/assets/images/node-js-logo.png'),
       description:
-        'Using Express framework for HTTP methods handling, Almost of the codes are writing in promises style.'
+        'Using Express framework for HTTP methods handling, Almost of the codes are written in promises style.'
     },
     {
       title: String20.create('Mongo'),
